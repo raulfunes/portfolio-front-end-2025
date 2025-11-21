@@ -1,0 +1,64 @@
+.experience-container {
+	padding: 40px 20px;
+}
+
+.experience {
+	position: relative;
+	border-left: 2px solid #ccc;
+	padding-left: 20px;
+}
+
+.experience-item {
+	position: relative;
+	margin-bottom: 40px;
+}
+
+.experience-dot {
+	position: absolute;
+	left: -30px;
+	top: 5px;
+	width: 14px;
+	height: 14px;
+	background: #06139b;
+	border-radius: 50%;
+	border: 2px solid white;
+	box-shadow: 0 0 0 2px #06139b;
+}
+
+.experience-content {
+	background: #f9f9f9;
+	padding: 15px 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.experience-content h3 {
+	margin: 0;
+	font-size: 18px;
+	color: #333;
+}
+
+.experience-content h4 {
+	margin: 5px 0;
+	font-weight: 500;
+	color: #666;
+}
+
+.experience-content span {
+	font-size: 14px;
+	color: #999;
+}
+
+.experience-content p {
+	margin-top: 10px;
+	color: #444;
+}
+
+.experience-content ul {
+	padding-left: 30px;
+	margin: 0;
+}
+
+.experience-content li {
+	color: #161616;
+}

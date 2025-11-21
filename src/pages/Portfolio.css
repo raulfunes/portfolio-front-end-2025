@@ -1,0 +1,91 @@
+.portfolio-container{
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    color: #121212;
+}
+
+.portfolio-container.dark{
+  background-color: #121212;
+  color: #f2f2f2;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    top: 90%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #121212;
+    font-family: sans-serif;
+    font-size: 14px;
+    opacity: 0.8;
+    animation: fadeIn 1s ease-in;
+    z-index: 1;
+  }
+
+  .portfolio-container.dark .scroll-indicator {
+    color: #f2f2f2;
+  }
+
+  .portfolio-container.dark .right-panel-container {
+    background-color: #161616;
+    color: #f2f2f2;
+  }
+
+  .scroll-indicator::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 40%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(70);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(60);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(70);
+        opacity: 0.2;
+    }
+}
+
+.scroll-indicator div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+
+    transition: all .3s ease;
+}
+  
+  .scroll-icon {
+    animation: bounce 1.5s infinite;
+    margin-top: 5px;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.8; }
+  }
+

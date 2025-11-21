@@ -1,0 +1,11 @@
+.right-panel-container {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    background-color: #ededed;
+    color: #000;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: opacity 0.3s ease, left 0.3s ease, width 0.3s ease;
+    z-index: 3;
+}

@@ -1,0 +1,8 @@
+.navbar{
+    position: absolute;
+    z-index: 3;
+
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}

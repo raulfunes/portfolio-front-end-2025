@@ -1,0 +1,11 @@
+{
+  "about-me": {
+    "title": "Hola! Soy Raúl Funes",
+    "sub-title": "Desarrollador FullStack",
+    "paragraph": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit consequuntur, cum quisquam aspernatur maiores animi nesciunt corporis repellat. Illo ducimus quibusdam sequi deserunt qui consectetur nulla atque iure tenetur omnis?"
+  },
+  "about": {
+    "title": "About us",
+    "text": "We are developers"
+  }
+}

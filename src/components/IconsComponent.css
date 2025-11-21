@@ -1,0 +1,22 @@
+.icon {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    width: 90px;
+    height: fit-content;
+
+    background-color: #06132b;
+    padding: .4rem 1rem;
+    border-radius: 10px;
+
+    text-decoration: none;
+    color: white;
+}
+
+.icon:hover {
+    background-color: #06139b;
+}
+
+.icon p {
+    margin: 0;
+}
