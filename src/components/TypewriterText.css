@@ -3,6 +3,16 @@
   min-height: 1em;
 }
 
+/* Mobile: ensure h1 and h2 typewriter elements are centered */
+@media (max-width: 768px) {
+  h1.typewriter-text,
+  h2.typewriter-text {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+}
+
 .typewriter-cursor {
   display: inline-block;
   font-family: "Press Start 2P", cursive;
