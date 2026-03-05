@@ -1,64 +1,317 @@
 .experience-container {
 	padding: 40px 20px;
+	max-width: 800px;
+	margin: 0 auto;
 }
 
-.experience {
-	position: relative;
-	border-left: 2px solid #ccc;
-	padding-left: 20px;
+.experience-header {
+	text-align: center;
+	margin-bottom: 48px;
 }
 
-.experience-item {
-	position: relative;
-	margin-bottom: 40px;
+.experience-header h2 {
+	font-size: 1.25rem;
+	color: #06139b;
+	margin: 0 0 12px 0;
+	letter-spacing: 2px;
 }
 
-.experience-dot {
-	position: absolute;
-	left: -30px;
-	top: 5px;
-	width: 14px;
-	height: 14px;
-	background: #06139b;
-	border-radius: 50%;
-	border: 2px solid white;
-	box-shadow: 0 0 0 2px #06139b;
-}
-
-.experience-content {
-	background: #f9f9f9;
-	padding: 15px 20px;
-	border-radius: 8px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.experience-content h3 {
-	margin: 0;
-	font-size: 18px;
-	color: #333;
-}
-
-.experience-content h4 {
-	margin: 5px 0;
-	font-weight: 500;
+.experience-subtitle {
+	font-family: 'VT323', monospace;
+	font-size: 1.25rem;
 	color: #666;
-}
-
-.experience-content span {
-	font-size: 14px;
-	color: #999;
-}
-
-.experience-content p {
-	margin-top: 10px;
-	color: #444;
-}
-
-.experience-content ul {
-	padding-left: 30px;
 	margin: 0;
 }
 
-.experience-content li {
-	color: #161616;
+/* Timeline */
+.experience-timeline {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+/* Card */
+.experience-card {
+	background: #fafafa;
+	border: 3px solid #1a1a2e;
+	border-radius: 0;
+	position: relative;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 4px 4px 0 #1a1a2e;
+}
+
+.experience-card:hover {
+	transform: translate(-2px, -2px);
+	box-shadow: 6px 6px 0 #1a1a2e;
+}
+
+.experience-card.expanded {
+	border-color: #06139b;
+	box-shadow: 4px 4px 0 #06139b;
+}
+
+/* Card Header with Year */
+.experience-card-header {
+	display: flex;
+	align-items: center;
+	padding: 16px 20px 0;
+}
+
+.experience-year-badge {
+	flex-shrink: 0;
+}
+
+.experience-year-badge .pixel-border {
+	display: inline-block;
+	background: #06139b;
+	color: #fff;
+	padding: 6px 12px;
+	font-family: 'Press Start 2P', cursive;
+	font-size: 0.65rem;
+	border: 2px solid #1a1a2e;
+}
+
+.experience-connector {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	margin-left: 16px;
+}
+
+.connector-line {
+	flex: 1;
+	height: 2px;
+	background: linear-gradient(90deg, #06139b 50%, transparent 50%);
+	background-size: 8px 2px;
+}
+
+.connector-dot {
+	width: 12px;
+	height: 12px;
+	background: #06139b;
+	border: 2px solid #1a1a2e;
+	margin: 0 4px;
+}
+
+/* Card Content */
+.experience-card-content {
+	padding: 20px;
+}
+
+.experience-card-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.experience-info {
+	flex: 1;
+	min-width: 200px;
+}
+
+.experience-title {
+	font-family: 'Press Start 2P', cursive;
+	font-size: 0.85rem;
+	color: #1a1a2e;
+	margin: 0 0 8px 0;
+	line-height: 1.5;
+}
+
+.experience-company {
+	font-family: 'VT323', monospace;
+	font-size: 1.5rem;
+	color: #06139b;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.company-icon {
+	color: #06139b;
+	animation: blink 1s infinite;
+}
+
+@keyframes blink {
+	0%, 50% { opacity: 1; }
+	51%, 100% { opacity: 0; }
+}
+
+/* Meta badges */
+.experience-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.meta-badge {
+	font-family: 'VT323', monospace;
+	font-size: 1rem;
+	padding: 4px 10px;
+	border: 2px solid #1a1a2e;
+	background: #fff;
+	color: #1a1a2e;
+}
+
+.meta-badge.location {
+	background: #e8f4f8;
+	border-color: #0ea5e9;
+	color: #0369a1;
+}
+
+.meta-badge.type {
+	background: #f0fdf4;
+	border-color: #22c55e;
+	color: #15803d;
+}
+
+.meta-badge.duration {
+	background: #fef3c7;
+	border-color: #f59e0b;
+	color: #b45309;
+}
+
+/* Description */
+.experience-description {
+	font-family: 'VT323', monospace;
+	font-size: 1.25rem;
+	line-height: 1.5;
+	color: #444;
+	margin: 0 0 16px 0;
+	padding-bottom: 16px;
+	border-bottom: 2px dashed #ddd;
+}
+
+/* Expandable Details */
+.experience-details {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease, opacity 0.3s ease;
+	opacity: 0;
+}
+
+.experience-details.visible {
+	max-height: 500px;
+	opacity: 1;
+	margin-bottom: 16px;
+}
+
+.achievements-section {
+	padding: 16px;
+	background: #f0f9ff;
+	border: 2px solid #0ea5e9;
+	margin-bottom: 16px;
+}
+
+.section-title {
+	font-family: 'Press Start 2P', cursive;
+	font-size: 0.6rem;
+	color: #0369a1;
+	margin: 0 0 12px 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.title-icon {
+	color: #f59e0b;
+}
+
+.achievements-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.achievement-item {
+	font-family: 'VT323', monospace;
+	font-size: 1.15rem;
+	color: #1a1a2e;
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+}
+
+.bullet {
+	color: #22c55e;
+	font-weight: bold;
+	flex-shrink: 0;
+}
+
+/* Technologies */
+.technologies-section {
+	margin-bottom: 12px;
+}
+
+.tech-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tech-tag {
+	font-family: 'VT323', monospace;
+	font-size: 1rem;
+	padding: 4px 12px;
+	background: #1a1a2e;
+	color: #4ade80;
+	border: none;
+	transition: all 0.15s ease;
+}
+
+.tech-tag:hover {
+	background: #06139b;
+	color: #fff;
+}
+
+/* Expand Indicator */
+.expand-indicator {
+	text-align: center;
+	padding-top: 12px;
+	border-top: 2px dashed #ddd;
+}
+
+.expand-indicator span {
+	font-family: 'VT323', monospace;
+	font-size: 1rem;
+	color: #06139b;
+	cursor: pointer;
+}
+
+.expand-indicator span:hover {
+	text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+	.experience-container {
+		padding: 24px 16px;
+	}
+
+	.experience-header h2 {
+		font-size: 1rem;
+	}
+
+	.experience-card-top {
+		flex-direction: column;
+	}
+
+	.experience-title {
+		font-size: 0.7rem;
+	}
+
+	.experience-meta {
+		width: 100%;
+	}
+
+	.meta-badge {
+		font-size: 0.9rem;
+	}
 }
