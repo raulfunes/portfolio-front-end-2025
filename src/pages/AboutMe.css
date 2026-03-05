@@ -23,22 +23,19 @@
     z-index: 1;
     grid-template-columns: auto 1fr;
     grid-template-areas:
-        "photo terminal"
-        "photo icons";
+        "photo terminal";
     column-gap: 3rem;
-    row-gap: 1rem;
+    align-items: center;
 }
 
 .about-content.threshold {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-areas:
-        "photo terminal"
-        "icons icons";
+        "photo terminal";
     justify-content: center;
     align-items: center;
     column-gap: 1.5rem;
-    row-gap: 0.5rem;
 }
 
 .about-content h1, .about-content h2, .about-content p {
@@ -119,16 +116,42 @@
     object-fit: cover;
 }
 
-/* Icons */
-.icons-container {
-    grid-area: icons;
+/* Terminal contact command line */
+.terminal-contact-line {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-family: 'VT323', monospace;
     flex-wrap: wrap;
 }
 
-.icons-container.threshold .icon {
-    width: auto;
+.terminal-prompt {
+    color: #28c840;
+    font-size: 1.1rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.terminal-cmd {
+    color: #3b82f6;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+.terminal-flag {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.icons-container-terminal {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 /* Responsive */
@@ -173,8 +196,7 @@
 
     .about-content.threshold {
         grid-template-areas:
-            "photo terminal"
-            "icons icons";
+            "photo terminal";
         column-gap: 1rem;
     }
 
@@ -210,8 +232,7 @@
         grid-template-columns: 1fr;
         grid-template-areas:
             "photo"
-            "terminal"
-            "icons";
+            "terminal";
         justify-items: center;
         column-gap: 0;
         row-gap: 1.5rem;
@@ -231,10 +252,6 @@
 
     .about-content p {
         margin-bottom: 1rem;
-    }
-
-    .icons-container {
-        justify-content: center;
     }
 }
 

@@ -55,12 +55,16 @@ const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdR
 						className={roleDone ? "hero-fade-in visible" : "hero-fade-in"}
 						compact={isCompact}
 					/>
+					<div className={roleDone ? "terminal-contact-line hero-fade-in visible delay-1" : "terminal-contact-line hero-fade-in"}>
+						<span className="terminal-prompt">$</span>
+						<span className="terminal-cmd">contact</span>
+						<span className="terminal-flag">--via</span>
+						<IconsComponent
+							className="icons-container-terminal"
+							showName={thresholdReached}
+						/>
+					</div>
 				</TerminalFrame>
-
-				<IconsComponent
-					className={`${thresholdReached ? "icons-container" : "icons-container threshold"} ${roleDone ? "hero-fade-in visible delay-1" : "hero-fade-in"}`}
-					showName={thresholdReached}
-				/>
 			</div>
 		</div>
 	);

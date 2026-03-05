@@ -1,32 +1,42 @@
 .icon {
     display: flex;
     align-items: center;
-    gap: .5rem;
-    width: 90px;
+    gap: 0.35rem;
     height: fit-content;
 
-    background-color: #06132b;
-    padding: .5rem 1.1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: transparent;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
 
     text-decoration: none;
-    color: white;
-    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    color: #e2e8f0;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .icon:hover {
-    background-color: #0f2457;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(6, 19, 43, 0.35);
-    border-color: rgba(255, 255, 255, 0.18);
+    background-color: rgba(59, 130, 246, 0.12);
+    border-color: #3b82f6;
+    color: #60a5fa;
 }
 
 .icon:active {
-    transform: translateY(0px);
-    box-shadow: 0 1px 4px rgba(6, 19, 43, 0.25);
+    background-color: rgba(59, 130, 246, 0.2);
 }
 
 .icon p {
     margin: 0;
+    white-space: nowrap;
+}
+
+.icon svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.icon:hover svg {
+    opacity: 1;
 }
