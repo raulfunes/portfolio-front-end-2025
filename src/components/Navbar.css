@@ -1,8 +1,10 @@
-.navbar{
+.navbar {
     position: absolute;
-    z-index: 3;
-
-    padding: 1rem;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    padding: 1rem 1.25rem;
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.6rem;
 }
