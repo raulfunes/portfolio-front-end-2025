@@ -1,5 +1,5 @@
 .rotating-role {
-  display: inline-block;
+  display: block;
   min-height: 1em;
   min-width: 1ch;
 }
