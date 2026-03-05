@@ -13,6 +13,16 @@
   color: #f2f2f2;
 }
 
+/* Mobile layout - stack vertically with normal scroll */
+@media (max-width: 768px) {
+  .portfolio-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: 24px;
@@ -70,5 +80,12 @@
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 0.7; }
+  }
+
+  /* Hide scroll indicator on mobile */
+  @media (max-width: 768px) {
+    .scroll-indicator {
+      display: none;
+    }
   }
 

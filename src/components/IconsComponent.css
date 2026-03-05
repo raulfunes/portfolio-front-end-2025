@@ -40,3 +40,16 @@
 .icon:hover svg {
     opacity: 1;
 }
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .icon {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.9rem;
+    }
+
+    .icons-container-terminal {
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+}

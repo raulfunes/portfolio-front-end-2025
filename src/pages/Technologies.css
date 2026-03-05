@@ -241,6 +241,20 @@
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .technologies-section {
+    padding: 40px 15px;
+  }
+
+  .technologies-title {
+    font-size: 1rem;
+  }
+
+  .technologies-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
 @media (max-width: 600px) {
   .category-tabs {
     flex-direction: column;

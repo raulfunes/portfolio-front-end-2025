@@ -292,3 +292,90 @@
 .hero-fade-in.visible.delay-1 {
     transition-delay: 0.25s;
 }
+
+/* ===========================
+   MOBILE LAYOUT
+   =========================== */
+@media (max-width: 768px) {
+    .about-me-container {
+        position: relative;
+        width: 100% !important;
+        height: auto;
+        min-height: 100vh;
+        padding: 80px 20px 40px;
+        box-shadow: none;
+    }
+
+    .about-me-container.threshold {
+        position: relative;
+        width: 100% !important;
+        height: auto;
+        min-height: auto;
+        padding: 80px 20px 40px;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "photo"
+            "terminal";
+        justify-items: center;
+        column-gap: 0;
+        row-gap: 1.5rem;
+        max-width: 100%;
+    }
+
+    .about-content.threshold {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .photo-wrapper {
+        max-width: 150px !important;
+        width: 150px !important;
+    }
+
+    .about-content.threshold .photo-wrapper {
+        width: 120px !important;
+    }
+
+    .about-content h1 {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .about-content h2 {
+        font-size: 0.75rem;
+        text-align: center;
+    }
+
+    .about-content p {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .about-content.threshold h1 {
+        font-size: 1rem;
+    }
+
+    .about-content.threshold h2 {
+        font-size: 0.75rem;
+    }
+
+    .about-content.threshold p {
+        font-size: 1rem;
+    }
+
+    .terminal-area {
+        width: 100%;
+    }
+
+    .terminal-contact-line {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .icons-container-terminal {
+        justify-content: center;
+    }
+}

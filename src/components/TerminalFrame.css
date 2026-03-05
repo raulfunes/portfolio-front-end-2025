@@ -83,3 +83,22 @@
 .terminal-compact .terminal-body {
   padding: 0.8rem 1rem 1rem;
 }
+
+/* Mobile terminal styles */
+@media (max-width: 768px) {
+  .terminal-frame {
+    border-radius: 8px;
+  }
+
+  .terminal-body {
+    padding: 1rem 1.2rem 1.2rem;
+  }
+
+  .terminal-frame.terminal-compact {
+    width: 100%;
+  }
+
+  .terminal-compact .terminal-body {
+    padding: 1rem 1.2rem 1.2rem;
+  }
+}

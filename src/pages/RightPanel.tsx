@@ -32,7 +32,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
 				overflowY: overflowY,
 			}}
 		>
-			<div style={{ minHeight: "150vh" }}>
+			<div>
 				<Experience />
 				<Projects />
 				<TechnologiesSection />

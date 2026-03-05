@@ -146,6 +146,16 @@
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .footer-section {
+    padding: 40px 15px 30px;
+  }
+
+  .footer-output {
+    font-size: 0.65rem;
+  }
+}
+
 @media (max-width: 500px) {
   .footer-links {
     flex-direction: column;
