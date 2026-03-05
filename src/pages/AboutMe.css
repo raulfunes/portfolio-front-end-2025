@@ -15,29 +15,35 @@
     overflow: hidden;
 }
 
+/* ===========================
+   FULL HERO (thresholdReached = true, no scroll)
+   Layout: photo left, terminal right
+   =========================== */
 .about-content {
     max-width: 1300px;
-    align-items: center;
     display: grid;
     position: relative;
     z-index: 1;
     grid-template-columns: auto 1fr;
-    grid-template-areas:
-        "photo terminal";
+    grid-template-areas: "photo terminal";
     column-gap: 3rem;
     align-items: center;
 }
 
+/* ===========================
+   COMPACT SIDEBAR (thresholdReached = false, scrolled)
+   Layout: photo top centered, terminal below
+   =========================== */
 .about-content.threshold {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-        "photo terminal";
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    column-gap: 1.5rem;
+    gap: 1.2rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
 }
 
+/* Typography */
 .about-content h1, .about-content h2, .about-content p {
     margin: 0;
 }
@@ -46,24 +52,31 @@
     margin-block: 0.5rem;
 }
 
-.about-content.threshold h1 {
-    font-size: 0.85rem;
-    margin-block: 0;
-}
-
 .about-content h2 {
     margin-block: 0.25rem;
-}
-
-.about-content.threshold h2 {
-    align-self: flex-start;
-    font-size: 0.7rem;
 }
 
 .about-content p {
     margin-top: 0.75rem;
     margin-bottom: 0;
     line-height: 1.5;
+}
+
+/* Compact typography */
+.about-content.threshold h1 {
+    font-size: 0.8rem;
+    margin-block: 0.25rem;
+}
+
+.about-content.threshold h2 {
+    font-size: 0.65rem;
+    margin-block: 0.15rem;
+}
+
+.about-content.threshold p {
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    line-height: 1.4;
 }
 
 /* Terminal area */
@@ -76,6 +89,12 @@
     position: relative;
     grid-area: photo;
     transition: width 1s ease;
+}
+
+/* In compact mode, cap the photo size and center it */
+.about-content.threshold .photo-wrapper {
+    width: 100px !important;
+    flex-shrink: 0;
 }
 
 .photo-glow {
@@ -154,23 +173,9 @@
     align-items: center;
 }
 
-/* Responsive */
-@media (max-width: 1372px) {
-    .about-me-container.threshold {
-        padding: 2rem;
-    }
-
-    .about-content.threshold h1 {
-        font-size: 0.75rem;
-        margin-block: 0;
-    }
-
-    .about-content.threshold h2 {
-        font-size: 0.6rem;
-        margin-block: 0;
-    }
-}
-
+/* ===========================
+   RESPONSIVE -- Full hero
+   =========================== */
 @media (max-width: 1184px) {
     .photo-wrapper {
         max-width: 280px;
@@ -186,30 +191,6 @@
 
     .about-content h2 {
         font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 1070px) {
-    .about-me-container.threshold {
-        padding: 1rem;
-    }
-
-    .about-content.threshold {
-        grid-template-areas:
-            "photo terminal";
-        column-gap: 1rem;
-    }
-
-    .about-content.threshold h1 {
-        font-size: 0.65rem;
-    }
-
-    .about-content.threshold h2 {
-        font-size: 0.55rem;
-    }
-
-    .about-content.threshold p {
-        font-size: 0.85rem;
     }
 }
 
@@ -252,6 +233,41 @@
 
     .about-content p {
         margin-bottom: 1rem;
+    }
+}
+
+/* ===========================
+   RESPONSIVE -- Compact sidebar
+   =========================== */
+@media (max-width: 1372px) {
+    .about-me-container.threshold {
+        padding: 2rem 1rem;
+    }
+
+    .about-content.threshold h1 {
+        font-size: 0.7rem;
+    }
+
+    .about-content.threshold h2 {
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 1070px) {
+    .about-me-container.threshold {
+        padding: 1rem 0.5rem;
+    }
+
+    .about-content.threshold h1 {
+        font-size: 0.6rem;
+    }
+
+    .about-content.threshold h2 {
+        font-size: 0.5rem;
+    }
+
+    .about-content.threshold p {
+        font-size: 0.75rem;
     }
 }
 
