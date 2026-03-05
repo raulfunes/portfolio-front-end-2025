@@ -1,28 +1,254 @@
-.tech-grid {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
+.technologies-section {
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.technologies-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.technologies-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.25rem;
+  color: #22c55e;
+  margin: 0 0 12px 0;
+  letter-spacing: 2px;
+}
+
+.technologies-subtitle {
+  font-family: 'VT323', monospace;
+  font-size: 1.25rem;
+  color: #888;
+  margin: 0;
+}
+
+/* Category Tabs */
+.category-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.category-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #1a1a2e;
+  border: 2px solid #2d2d44;
+  color: #888;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-tab:hover {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.category-tab.active {
+  background: #0d1a0d;
+  border-color: #22c55e;
+  color: #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+}
+
+.tab-icon {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+}
+
+/* Terminal Window */
+.terminal-window {
+  background: #0d0d15;
+  border: 3px solid #2d2d44;
+  box-shadow: 4px 4px 0 #0a0a0f;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #1a1a2e;
+  border-bottom: 2px solid #2d2d44;
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-dot.red { background: #ff5f56; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #27ca40; }
+
+.terminal-title {
+  margin-left: 12px;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  color: #888;
+}
+
+.terminal-body {
+  padding: 20px;
+}
+
+.terminal-output {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+}
+
+.output-prefix {
+  color: #22c55e;
+}
+
+.output-text {
+  color: #888;
+}
+
+/* Skills List */
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skill-item {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  .tech-card {
-    display: flex;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.skill-name {
+  font-family: 'VT323', monospace;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.skill-level {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  color: #888;
+}
+
+/* Skill Bar */
+.skill-bar-container {
+  position: relative;
+}
+
+.skill-bar-bg {
+  height: 8px;
+  background: #1a1a2e;
+  border: 1px solid #2d2d44;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--fill-color);
+  transition: width 0.8s ease-out;
+  box-shadow: 0 0 10px var(--fill-color);
+}
+
+.skill-bar-fill.animated {
+  width: var(--fill-width);
+}
+
+/* Pixel Blocks */
+.skill-bar-blocks {
+  display: flex;
+  gap: 4px;
+}
+
+.bar-block {
+  width: 100%;
+  height: 6px;
+  background: #1a1a2e;
+  border: 1px solid #2d2d44;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.bar-block.filled {
+  background: var(--block-color);
+  border-color: var(--block-color);
+  box-shadow: 0 0 5px var(--block-color);
+  animation: blockPulse 0.3s ease forwards;
+}
+
+@keyframes blockPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Terminal Cursor */
+.terminal-cursor {
+  display: flex;
+  gap: 4px;
+  margin-top: 24px;
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+}
+
+.cursor-prefix {
+  color: #22c55e;
+}
+
+.cursor-blink {
+  color: #22c55e;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .category-tabs {
     flex-direction: column;
-    align-items: center;
-    width: 80px;
-    padding: 8px;
-    border-radius: 8px;
-    background: #f5f5f5;
-    transition: transform 0.2s;
   }
   
-  .tech-card img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
+  .category-tab {
+    width: 100%;
+    justify-content: center;
   }
-  
-  .tech-card:hover {
-    transform: scale(1.05);
-  }
+}
   
