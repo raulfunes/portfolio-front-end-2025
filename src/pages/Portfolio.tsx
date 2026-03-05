@@ -57,7 +57,8 @@ const Portfolio: React.FC = () => {
       <AboutMe 
         aboutWidth={aboutWidth} 
         aboutWidthStr={aboutWidthStr} 
-        thresholdReached={scrollVal !== threshold}/>
+        thresholdReached={scrollVal !== threshold}
+        isDark={isDark}/>
 
       <RightPanel 
         aboutWidthStr={aboutWidthStr} 
