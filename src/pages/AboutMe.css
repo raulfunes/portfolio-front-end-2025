@@ -11,71 +11,112 @@
     justify-content: center;
     z-index: 2;
     padding: 50px;
-    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2); /* x-offset | y-offset | blur | color */
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
-.about-content{
+/* ===========================
+   FULL HERO (thresholdReached = true, no scroll)
+   Layout: photo left, terminal right
+   =========================== */
+.about-content {
     max-width: 1300px;
-    align-items: center;
     display: grid;
+    position: relative;
+    z-index: 1;
     grid-template-columns: auto 1fr;
-    grid-template-areas:
-    "photo ."
-    "photo title"
-    "photo sub-title"
-    "photo paragraph"
-    "photo icons"
-    "photo .";
-    column-gap: 5rem;
+    grid-template-areas: "photo terminal";
+    column-gap: 3rem;
+    align-items: center;
 }
 
-.about-content.threshold{
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-    "photo title"
-    "photo sub-title"
-    "photo icons"
-    "paragraph paragraph";
-    justify-content: center;
+/* ===========================
+   COMPACT SIDEBAR (thresholdReached = false, scrolled)
+   Layout: photo top centered, terminal below
+   =========================== */
+.about-content.threshold {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    column-gap: 2rem;
+    gap: 1.2rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
 }
 
+/* Typography */
 .about-content h1, .about-content h2, .about-content p {
     margin: 0;
 }
 
 .about-content h1 {
-    grid-area: title;
-    margin-block: 1rem;
-}
-
-.about-content.threshold h1 {
-    font-size: 1rem;
-    margin-block: 0;
+    margin-block: 0.5rem;
 }
 
 .about-content h2 {
-    grid-area: sub-title;
-}
-
-.about-content.threshold h2 {
-    align-self: flex-start;
-    font-size: .8rem;
+    margin-block: 0.25rem;
 }
 
 .about-content p {
-    grid-area: paragraph;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    line-height: 1.5;
 }
 
+/* Compact typography */
+.about-content.threshold h1 {
+    font-size: 0.8rem;
+    margin-block: 0.25rem;
+}
+
+.about-content.threshold h2 {
+    font-size: 0.65rem;
+    margin-block: 0.15rem;
+}
+
+.about-content.threshold p {
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    line-height: 1.4;
+}
+
+/* Terminal area */
+.terminal-area {
+    grid-area: terminal;
+}
+
+/* Photo wrapper with glow */
 .photo-wrapper {
     position: relative;
     grid-area: photo;
     transition: width 1s ease;
+}
 
+/* In compact mode, cap the photo size and center it */
+.about-content.threshold .photo-wrapper {
+    width: 100px !important;
+    flex-shrink: 0;
+}
+
+.photo-glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        #3b82f6,
+        #06b6d4,
+        #8b5cf6,
+        #3b82f6
+    );
+    opacity: 0.55;
+    filter: blur(12px);
+    z-index: 1;
+    animation: glow-rotate 4s linear infinite;
+}
+
+@keyframes glow-rotate {
+    0% { filter: blur(12px) hue-rotate(0deg); }
+    100% { filter: blur(12px) hue-rotate(360deg); }
 }
 
 .about-photo {
@@ -91,39 +132,53 @@
     object-position: 0 -40px;
     width: 100%;
     height: 100%;
-    object-fit:  cover;
+    object-fit: cover;
 }
 
-.icons-container {
-    grid-area: icons;
+/* Terminal contact command line */
+.terminal-contact-line {
     display: flex;
-    gap: .5rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-family: 'VT323', monospace;
     flex-wrap: wrap;
 }
 
-.icons-container.threshold .icon {
-    width: auto;
+.terminal-prompt {
+    color: #28c840;
+    font-size: 1.1rem;
+    font-weight: bold;
+    flex-shrink: 0;
 }
 
-@media (max-width: 1372px) {
-    .about-me-container.threshold{
-        padding: 2rem;
-    }
-
-    .about-content.threshold h1 {
-        font-size: .8rem;
-        margin-block: 0;
-    }
-
-    .about-content.threshold h2 {
-        font-size: .7rem;
-        margin-block: 0;
-    }
+.terminal-cmd {
+    color: #3b82f6;
+    font-size: 1.05rem;
+    flex-shrink: 0;
 }
 
+.terminal-flag {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.icons-container-terminal {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* ===========================
+   RESPONSIVE -- Full hero
+   =========================== */
 @media (max-width: 1184px) {
     .photo-wrapper {
-        max-width: 300px;
+        max-width: 280px;
     }
 
     .about-content {
@@ -131,38 +186,11 @@
     }
 
     .about-content h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 
     .about-content h2 {
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 1070px) {
-    .about-me-container.threshold{
-        padding: 1rem;
-    }
-
-    .about-content.threshold{
-        grid-template-areas:
-        "photo title"
-        "photo sub-title"
-        "paragraph paragraph"
-        "icons icons";
-        column-gap: 1rem;
-    }
-
-    .about-content.threshold h1 {
-        font-size: .7rem;
-    }
-
-    .about-content.threshold h2 {
-        font-size: .6rem;
-    }
-
-    .about-content.threshold p {
-        font-size: .9rem;
+        font-size: 1.1rem;
     }
 }
 
@@ -172,41 +200,89 @@
     }
 
     .about-content h1 {
-        font-size: 1.6rem;
-    }
-
-    .about-content h2 {
-        font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 856px) {
-    .about-content{
-        grid-template-areas:
-        "photo ."
-        "photo title"
-        "photo sub-title"
-        "photo paragraph"
-        "icons icons"
-        ". .";
-        justify-content: center;
-        align-items: center;
-        column-gap: 1rem;
-    }
-
-    .about-content h1 {
         font-size: 1.4rem;
     }
 
     .about-content h2 {
         font-size: 1rem;
     }
+}
+
+@media (max-width: 856px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "photo"
+            "terminal";
+        justify-items: center;
+        column-gap: 0;
+        row-gap: 1.5rem;
+    }
+
+    .photo-wrapper {
+        max-width: 180px;
+    }
+
+    .about-content h1 {
+        font-size: 1.2rem;
+    }
+
+    .about-content h2 {
+        font-size: 0.9rem;
+    }
 
     .about-content p {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+    }
+}
+
+/* ===========================
+   RESPONSIVE -- Compact sidebar
+   =========================== */
+@media (max-width: 1372px) {
+    .about-me-container.threshold {
+        padding: 2rem 1rem;
     }
 
-    .icons-container {
-        margin-top: 2rem;
+    .about-content.threshold h1 {
+        font-size: 0.7rem;
     }
-  }
+
+    .about-content.threshold h2 {
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 1070px) {
+    .about-me-container.threshold {
+        padding: 1rem 0.5rem;
+    }
+
+    .about-content.threshold h1 {
+        font-size: 0.6rem;
+    }
+
+    .about-content.threshold h2 {
+        font-size: 0.5rem;
+    }
+
+    .about-content.threshold p {
+        font-size: 0.75rem;
+    }
+}
+
+/* Hero fade-in animations for paragraph, badges and icons */
+.hero-fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-fade-in.visible.delay-1 {
+    transition-delay: 0.25s;
+}

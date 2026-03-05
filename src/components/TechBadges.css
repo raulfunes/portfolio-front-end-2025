@@ -1,0 +1,50 @@
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.tech-badge:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--badge-color);
+  transform: translateY(-1px);
+}
+
+.tech-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--badge-color);
+  flex-shrink: 0;
+}
+
+/* Compact mode */
+.tech-badges-compact {
+  gap: 0.3rem;
+}
+
+.tech-badges-compact .tech-badge {
+  padding: 0.15rem 0.45rem;
+  font-size: 0.75rem;
+}
+
+.tech-badges-compact .tech-badge-dot {
+  width: 4px;
+  height: 4px;
+}

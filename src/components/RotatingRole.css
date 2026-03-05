@@ -1,0 +1,20 @@
+.rotating-role {
+  display: block;
+  min-height: 1em;
+  min-width: 1ch;
+}
+
+.rotating-cursor {
+  display: inline-block;
+  font-family: "Press Start 2P", cursive;
+  margin-left: 2px;
+}
+
+.rotating-cursor.blink {
+  animation: role-blink 0.7s step-end infinite;
+}
+
+@keyframes role-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

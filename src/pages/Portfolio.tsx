@@ -5,6 +5,7 @@ import { ChevronsDown } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { useDarkMode } from "../functions/useDarkMode";
 import RightPanel from "./RightPanel";
+import RetroParticles from "../components/RetroParticles";
 
 const Portfolio: React.FC = () => {
   const threshold = 300; // Umbral para la transición
@@ -52,6 +53,7 @@ const Portfolio: React.FC = () => {
   return (
     <div className={isDark? "portfolio-container dark" : "portfolio-container"}>
 
+      <RetroParticles isDark={isDark} />
       <Navbar isDark={isDark} toggle={toggle}/>
 
       <AboutMe 
@@ -67,11 +69,13 @@ const Portfolio: React.FC = () => {
         overflowY={scrollVal === threshold ? "auto" : "hidden"} 
         thresholdReached={scrollVal !== threshold} />
 
-      <div className="scroll-indicator">
-        <div style={scrollVal != 0? {opacity: 0} : {}}>
-          <span>Scroll</span>
-          <ChevronsDown className="scroll-icon" size={24} color={isDark? "white" : "black"} />
+      <div className="scroll-indicator" style={scrollVal !== 0 ? { opacity: 0, pointerEvents: "none" } : {}}>
+        <div className="scroll-line" />
+        <div className="scroll-label">
+          <span>{'> '}Scroll</span>
+          <ChevronsDown className="scroll-icon" size={20} color={isDark ? "white" : "black"} />
         </div>
+        <div className="scroll-line" />
       </div>
     </div>
   );
