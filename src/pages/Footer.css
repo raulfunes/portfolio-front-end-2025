@@ -146,6 +146,40 @@
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .footer-section {
+    padding: 40px 15px 30px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .footer-content {
+    width: 100%;
+    align-items: center;
+  }
+
+  .footer-output {
+    font-size: 0.65rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .footer-link {
+    width: 100%;
+    max-width: 220px;
+    justify-content: center;
+  }
+
+  .footer-bottom {
+    width: 100%;
+    align-items: center;
+  }
+}
+
 @media (max-width: 500px) {
   .footer-links {
     flex-direction: column;

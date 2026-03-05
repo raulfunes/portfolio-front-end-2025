@@ -48,3 +48,19 @@
   width: 4px;
   height: 4px;
 }
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .tech-badges {
+    justify-content: center;
+  }
+
+  .tech-badges-compact {
+    justify-content: center;
+  }
+
+  .tech-badges-compact .tech-badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+  }
+}

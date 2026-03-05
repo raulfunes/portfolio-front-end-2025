@@ -10,11 +10,25 @@ import RetroParticles from "../components/RetroParticles";
 const Portfolio: React.FC = () => {
   const threshold = 300; // Umbral para la transición
   const [scrollVal, setScrollVal] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const rightPanelRef = useRef<HTMLDivElement>(null);
   const { isDark, toggle } = useDarkMode();
 
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const handleWheel = useCallback(
     (e: WheelEvent) => {
+      // Skip custom scroll handling on mobile
+      if (isMobile) return;
+
       // Si aún no se completó la transición, siempre intervenimos
       if (scrollVal < threshold) {
         e.preventDefault();
@@ -33,22 +47,26 @@ const Portfolio: React.FC = () => {
         // Si se scrollea hacia abajo, dejamos que la Experiencia maneje su scroll natural.
       }
     },
-    [scrollVal, threshold]
+    [scrollVal, threshold, isMobile]
   );
 
   useEffect(() => {
+    // Don't attach wheel handler on mobile
+    if (isMobile) return;
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
-  }, [handleWheel]);
+  }, [handleWheel, isMobile]);
 
   // Calculamos el ancho de About Me:
-  // scrollVal = 0 => 100vw; scrollVal = threshold => 30vw.
-  const aboutWidth = scrollVal < threshold ? 100 - (50 * scrollVal) / threshold : 40;
-  const aboutWidthStr = `${aboutWidth}vw`;
+  // En móvil usamos 100% para ambos paneles (layout vertical)
+  // scrollVal = 0 => 100vw; scrollVal = threshold => 40vw.
+  const aboutWidth = isMobile ? 100 : (scrollVal < threshold ? 100 - (60 * scrollVal) / threshold : 40);
+  const aboutWidthStr = isMobile ? "100%" : `${aboutWidth}vw`;
   // La sección Experiencia ocupará el complemento
-  const rightPanelWidthStr = `calc(100vw - ${aboutWidthStr})`;
+  const rightPanelWidthStr = isMobile ? "100%" : `calc(100vw - ${aboutWidthStr})`;
   // La opacidad de Experiencia aumenta conforme se avanza la transición
-  const rightPanelOpacity = scrollVal < threshold ? scrollVal / threshold : 1;
+  const rightPanelOpacity = isMobile ? 1 : (scrollVal < threshold ? scrollVal / threshold : 1);
 
   return (
     <div className={isDark? "portfolio-container dark" : "portfolio-container"}>

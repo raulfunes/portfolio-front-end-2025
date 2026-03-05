@@ -7,3 +7,10 @@
   pointer-events: none;
   z-index: 1;
 }
+
+/* Hide on mobile for better performance */
+@media (max-width: 768px) {
+  .retro-particles {
+    display: none;
+  }
+}

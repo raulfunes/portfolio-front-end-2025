@@ -18,3 +18,11 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+/* Mobile: center the rotating role */
+@media (max-width: 768px) {
+  .rotating-role {
+    text-align: center;
+    width: 100%;
+  }
+}

@@ -36,6 +36,26 @@
   .project-grid {
     grid-template-columns: 1fr;
   }
+
+  .projects-section {
+    padding: 30px 15px;
+  }
+
+  .projects-title {
+    font-size: 1rem;
+  }
+
+  .projects-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .project-name {
+    font-size: 0.6rem;
+  }
+
+  .project-description {
+    font-size: 1rem;
+  }
 }
 
 /* Card */
