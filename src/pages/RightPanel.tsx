@@ -3,6 +3,7 @@ import "./RightPanel.css";
 import { Experience } from "./Experience";
 import { Projects } from "./Projects";
 import { TechnologiesSection } from "./Technologies";
+import { Footer } from "./Footer";
 
 interface RightPanelProps {
 	rightPanelRef: Ref<HTMLDivElement>;
@@ -36,6 +37,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
 				<Experience />
 				<Projects />
 				<TechnologiesSection />
+				<Footer />
 			</div>
 		</div>
 	);
