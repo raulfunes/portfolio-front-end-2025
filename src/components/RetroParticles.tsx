@@ -26,15 +26,15 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
   const animFrameRef = useRef<number>(0);
 
   const createParticle = useCallback((width: number, height: number): Particle => {
-    const isSparkle = Math.random() < 0.15;
+    const isSparkle = Math.random() < 0.2;
     return {
       x: Math.random() * width,
       y: Math.random() * height,
-      size: isSparkle ? Math.random() * 2 + 2 : Math.random() * 2 + 1,
-      speedX: (Math.random() - 0.5) * 0.4,
-      speedY: -(Math.random() * 0.3 + 0.1),
+      size: isSparkle ? Math.random() * 3 + 3 : Math.random() * 2.5 + 2,
+      speedX: (Math.random() - 0.5) * 0.5,
+      speedY: -(Math.random() * 0.35 + 0.1),
       opacity: 0,
-      baseOpacity: isSparkle ? Math.random() * 0.25 + 0.3 : Math.random() * 0.2 + 0.15,
+      baseOpacity: isSparkle ? Math.random() * 0.2 + 0.55 : Math.random() * 0.2 + 0.35,
       sparkle: isSparkle,
       sparkleTimer: Math.random() * 200,
       sparkleDuration: Math.random() * 60 + 40,
@@ -74,7 +74,7 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
       if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const color = isDark ? "255, 255, 255" : "6, 19, 43";
+      const color = isDark ? "200, 210, 230" : "15, 30, 70";
 
       particlesRef.current.forEach((p) => {
         // Update position
@@ -97,7 +97,7 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
             // Brief bright flash
             const flashProgress = (p.sparkleTimer - p.sparkleDuration) / 30;
             if (flashProgress < 1) {
-              currentOpacity = p.baseOpacity + (0.5 - p.baseOpacity) * Math.sin(flashProgress * Math.PI);
+              currentOpacity = p.baseOpacity + (0.85 - p.baseOpacity) * Math.sin(flashProgress * Math.PI);
             } else {
               p.sparkleTimer = 0;
               p.sparkleDuration = Math.random() * 120 + 60;
