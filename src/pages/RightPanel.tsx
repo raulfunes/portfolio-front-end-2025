@@ -20,7 +20,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
 	rightPanelWidthStr,
 	rightPanelOpacity,
 	overflowY,
-	thresholdReached,
 }) => {
 	return (
 		<div
