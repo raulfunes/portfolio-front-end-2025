@@ -24,22 +24,37 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animFrameRef = useRef<number>(0);
+  const isDarkRef = useRef(isDark);
+  const initializedRef = useRef(false);
+  const prevSizeRef = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
 
-  const createParticle = useCallback((width: number, height: number): Particle => {
-    const isSparkle = Math.random() < 0.2;
-    return {
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: isSparkle ? Math.random() * 3 + 3 : Math.random() * 2.5 + 2,
-      speedX: (Math.random() - 0.5) * 0.5,
-      speedY: -(Math.random() * 0.35 + 0.1),
-      opacity: 0,
-      baseOpacity: isSparkle ? Math.random() * 0.2 + 0.55 : Math.random() * 0.2 + 0.35,
-      sparkle: isSparkle,
-      sparkleTimer: Math.random() * 200,
-      sparkleDuration: Math.random() * 60 + 40,
-    };
-  }, []);
+  // Keep isDark in a ref so the animation loop always reads the latest value
+  // without needing to be in the useEffect dependency array.
+  useEffect(() => {
+    isDarkRef.current = isDark;
+  }, [isDark]);
+
+  const createParticle = useCallback(
+    (width: number, height: number, startVisible: boolean): Particle => {
+      const isSparkle = Math.random() < 0.2;
+      const baseOpacity = isSparkle
+        ? Math.random() * 0.2 + 0.55
+        : Math.random() * 0.2 + 0.35;
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: isSparkle ? Math.random() * 3 + 3 : Math.random() * 2.5 + 2,
+        speedX: (Math.random() - 0.5) * 0.5,
+        speedY: -(Math.random() * 0.35 + 0.1),
+        opacity: startVisible ? baseOpacity : 0,
+        baseOpacity,
+        sparkle: isSparkle,
+        sparkleTimer: Math.random() * 200,
+        sparkleDuration: Math.random() * 60 + 40,
+      };
+    },
+    []
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -50,38 +65,60 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
 
     const resizeCanvas = () => {
       const parent = canvas.parentElement;
-      if (parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
+      if (!parent) return;
+
+      const newW = parent.clientWidth;
+      const newH = parent.clientHeight;
+
+      // On resize, rescale existing particle positions proportionally
+      // so they stay in the same relative spot inside the container.
+      if (
+        particlesRef.current.length > 0 &&
+        prevSizeRef.current.w > 0 &&
+        prevSizeRef.current.h > 0
+      ) {
+        const scaleX = newW / prevSizeRef.current.w;
+        const scaleY = newH / prevSizeRef.current.h;
+        particlesRef.current.forEach((p) => {
+          p.x *= scaleX;
+          p.y *= scaleY;
+        });
       }
+
+      canvas.width = newW;
+      canvas.height = newH;
+      prevSizeRef.current = { w: newW, h: newH };
     };
 
     resizeCanvas();
 
-    // Initialize particles
-    particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () =>
-      createParticle(canvas.width, canvas.height)
-    );
-
-    // Fade in particles gradually
-    particlesRef.current.forEach((p, i) => {
-      setTimeout(() => {
-        p.opacity = p.baseOpacity;
-      }, i * 40);
-    });
+    // Only create particles on first mount -- never re-create.
+    const isFirstMount = !initializedRef.current;
+    if (isFirstMount) {
+      initializedRef.current = true;
+      particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () =>
+        createParticle(canvas.width, canvas.height, false)
+      );
+      // Staggered fade-in only on first mount
+      particlesRef.current.forEach((p, i) => {
+        setTimeout(() => {
+          p.opacity = p.baseOpacity;
+        }, i * 30);
+      });
+    }
 
     const animate = () => {
       if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const color = isDark ? "200, 210, 230" : "15, 30, 70";
+      const color = isDarkRef.current ? "200, 210, 230" : "15, 30, 70";
 
       particlesRef.current.forEach((p) => {
         // Update position
         p.x += p.speedX;
         p.y += p.speedY;
 
-        // Wrap around edges
+        // Wrap around edges using current canvas dimensions
         if (p.y < -10) {
           p.y = canvas.height + 10;
           p.x = Math.random() * canvas.width;
@@ -94,10 +131,13 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
         if (p.sparkle) {
           p.sparkleTimer++;
           if (p.sparkleTimer > p.sparkleDuration) {
-            // Brief bright flash
-            const flashProgress = (p.sparkleTimer - p.sparkleDuration) / 30;
+            const flashProgress =
+              (p.sparkleTimer - p.sparkleDuration) / 30;
             if (flashProgress < 1) {
-              currentOpacity = p.baseOpacity + (0.85 - p.baseOpacity) * Math.sin(flashProgress * Math.PI);
+              currentOpacity =
+                p.baseOpacity +
+                (0.85 - p.baseOpacity) *
+                  Math.sin(flashProgress * Math.PI);
             } else {
               p.sparkleTimer = 0;
               p.sparkleDuration = Math.random() * 120 + 60;
@@ -107,12 +147,7 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
 
         // Draw pixel-style square
         ctx.fillStyle = `rgba(${color}, ${currentOpacity})`;
-        ctx.fillRect(
-          Math.round(p.x),
-          Math.round(p.y),
-          p.size,
-          p.size
-        );
+        ctx.fillRect(Math.round(p.x), Math.round(p.y), p.size, p.size);
       });
 
       animFrameRef.current = requestAnimationFrame(animate);
@@ -127,7 +162,7 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
       cancelAnimationFrame(animFrameRef.current);
       resizeObserver.disconnect();
     };
-  }, [isDark, createParticle]);
+  }, [createParticle]);
 
   return <canvas ref={canvasRef} className="retro-particles" />;
 };
