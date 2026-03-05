@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Experience.css";
 
 const experiences = [
@@ -38,6 +38,28 @@ const experiences = [
 
 export const Experience = () => {
 	const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+	const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+	const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					const index = Number(entry.target.getAttribute('data-index'));
+					if (entry.isIntersecting) {
+						setVisibleCards((prev) => new Set(prev).add(index));
+					}
+				});
+			},
+			{ threshold: 0.2 }
+		);
+
+		cardRefs.current.forEach((ref) => {
+			if (ref) observer.observe(ref);
+		});
+
+		return () => observer.disconnect();
+	}, []);
 
 	const toggleExpand = (index: number) => {
 		setExpandedIndex(expandedIndex === index ? null : index);
@@ -53,8 +75,10 @@ export const Experience = () => {
 			<div className="experience-timeline">
 				{experiences.map((exp, index) => (
 					<div 
-						key={index} 
-						className={`experience-card ${expandedIndex === index ? 'expanded' : ''}`}
+						key={index}
+						ref={(el) => { cardRefs.current[index] = el; }}
+						data-index={index}
+						className={`experience-card ${expandedIndex === index ? 'expanded' : ''} ${visibleCards.has(index) ? 'visible' : ''}`}
 						onClick={() => toggleExpand(index)}
 					>
 						<div className="experience-card-header">

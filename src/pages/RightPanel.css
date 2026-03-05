@@ -2,10 +2,29 @@
     position: fixed;
     top: 0;
     height: 100vh;
-    background-color: #ededed;
-    color: #000;
+    background-color: #0f0f1a;
+    color: #e0e0e0;
     padding: 20px;
     box-sizing: border-box;
     transition: opacity 0.3s ease, left 0.3s ease, width 0.3s ease;
     z-index: 3;
+}
+
+/* Scanline effect */
+.right-panel-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
 }
