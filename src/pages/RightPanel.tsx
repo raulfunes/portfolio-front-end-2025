@@ -3,6 +3,7 @@ import "./RightPanel.css";
 import { Experience } from "./Experience";
 import { Projects } from "./Projects";
 import { TechnologiesSection } from "./Technologies";
+import { Footer } from "./Footer";
 
 interface RightPanelProps {
 	rightPanelRef: Ref<HTMLDivElement>;
@@ -19,7 +20,6 @@ const RightPanel: React.FC<RightPanelProps> = ({
 	rightPanelWidthStr,
 	rightPanelOpacity,
 	overflowY,
-	thresholdReached,
 }) => {
 	return (
 		<div
@@ -35,13 +35,8 @@ const RightPanel: React.FC<RightPanelProps> = ({
 			<div style={{ minHeight: "150vh" }}>
 				<Experience />
 				<Projects />
-				<TechnologiesSection technologies={[
-  { area: "Frontend", nombre: "React", img: "https://w7.pngwing.com/pngs/235/872/png-transparent-react-computer-icons-redux-javascript-others-logo-symmetry-nodejs-thumbnail.png" },
-  { area: "Frontend", nombre: "Vue", img: "/logos/vue.png" },
-  { area: "Backend", nombre: "Node.js", img: "/logos/node.png" },
-  { area: "Backend", nombre: "Java", img: "/logos/java.png" },
-  { area: "DevOps", nombre: "Docker", img: "/logos/docker.png" },
-]}/>
+				<TechnologiesSection />
+				<Footer />
 			</div>
 		</div>
 	);
