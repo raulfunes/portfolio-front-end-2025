@@ -34,7 +34,7 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
       speedX: (Math.random() - 0.5) * 0.4,
       speedY: -(Math.random() * 0.3 + 0.1),
       opacity: 0,
-      baseOpacity: isSparkle ? Math.random() * 0.2 + 0.2 : Math.random() * 0.15 + 0.08,
+      baseOpacity: isSparkle ? Math.random() * 0.25 + 0.3 : Math.random() * 0.2 + 0.15,
       sparkle: isSparkle,
       sparkleTimer: Math.random() * 200,
       sparkleDuration: Math.random() * 60 + 40,

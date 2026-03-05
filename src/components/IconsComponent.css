@@ -1,20 +1,30 @@
 .icon {
     display: flex;
     align-items: center;
-    gap: .4rem;
+    gap: .5rem;
     width: 90px;
     height: fit-content;
 
     background-color: #06132b;
-    padding: .4rem 1rem;
-    border-radius: 10px;
+    padding: .5rem 1.1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     text-decoration: none;
     color: white;
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .icon:hover {
-    background-color: #06139b;
+    background-color: #0f2457;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(6, 19, 43, 0.35);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.icon:active {
+    transform: translateY(0px);
+    box-shadow: 0 1px 4px rgba(6, 19, 43, 0.25);
 }
 
 .icon p {

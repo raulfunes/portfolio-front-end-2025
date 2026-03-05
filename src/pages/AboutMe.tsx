@@ -44,9 +44,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdR
 					onComplete={handleSubtitleComplete}
 				/>
 				<p className={subtitleDone ? "hero-fade-in visible" : "hero-fade-in"}>{t("about-me.paragraph")}</p>
-				<div className={subtitleDone ? "hero-fade-in visible delay-1" : "hero-fade-in"}>
-					<IconsComponent className={thresholdReached ? "icons-container" : "icons-container threshold"} showName={thresholdReached} />
-				</div>
+				<IconsComponent className={`${thresholdReached ? "icons-container" : "icons-container threshold"} ${subtitleDone ? "hero-fade-in visible delay-1" : "hero-fade-in"}`} showName={thresholdReached} />
 			</div>
 		</div>
 	);
