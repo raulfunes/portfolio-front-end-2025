@@ -39,5 +39,6 @@
         opacity: 1 !important;
         overflow-y: visible !important;
         padding: 20px 15px;
+        z-index: 1;
     }
 }
