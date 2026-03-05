@@ -1,0 +1,84 @@
+.terminal-frame {
+  background: rgba(6, 19, 43, 0.95);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-red {
+  background-color: #ff5f57;
+}
+
+.dot-yellow {
+  background-color: #ffbd2e;
+}
+
+.dot-green {
+  background-color: #28c840;
+}
+
+.terminal-title {
+  font-family: 'VT323', monospace;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.5px;
+}
+
+.terminal-body {
+  padding: 1.5rem 1.8rem 1.8rem;
+}
+
+/* Override text colors inside terminal */
+.terminal-body h1,
+.terminal-body h2,
+.terminal-body p {
+  color: #f2f2f2;
+}
+
+/* Compact mode when threshold reached (sidebar) */
+.terminal-frame.terminal-compact {
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.terminal-compact .terminal-titlebar {
+  padding: 0.4rem 0.7rem;
+}
+
+.terminal-compact .terminal-dots {
+  gap: 4px;
+}
+
+.terminal-compact .terminal-dot {
+  width: 7px;
+  height: 7px;
+}
+
+.terminal-compact .terminal-title {
+  font-size: 0.7rem;
+}
+
+.terminal-compact .terminal-body {
+  padding: 0.8rem 1rem 1rem;
+}

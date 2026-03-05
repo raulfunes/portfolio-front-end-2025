@@ -15,7 +15,7 @@
     overflow: hidden;
 }
 
-.about-content{
+.about-content {
     max-width: 1300px;
     align-items: center;
     display: grid;
@@ -23,26 +23,22 @@
     z-index: 1;
     grid-template-columns: auto 1fr;
     grid-template-areas:
-    "photo ."
-    "photo title"
-    "photo sub-title"
-    "photo paragraph"
-    "photo icons"
-    "photo .";
-    column-gap: 5rem;
+        "photo terminal"
+        "photo icons";
+    column-gap: 3rem;
+    row-gap: 1rem;
 }
 
-.about-content.threshold{
+.about-content.threshold {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-areas:
-    "photo title"
-    "photo sub-title"
-    "photo icons"
-    "paragraph paragraph";
+        "photo terminal"
+        "icons icons";
     justify-content: center;
     align-items: center;
-    column-gap: 2rem;
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
 }
 
 .about-content h1, .about-content h2, .about-content p {
@@ -50,35 +46,61 @@
 }
 
 .about-content h1 {
-    grid-area: title;
-    margin-block: 1rem;
+    margin-block: 0.5rem;
 }
 
 .about-content.threshold h1 {
-    font-size: 1rem;
+    font-size: 0.85rem;
     margin-block: 0;
 }
 
 .about-content h2 {
-    grid-area: sub-title;
+    margin-block: 0.25rem;
 }
 
 .about-content.threshold h2 {
     align-self: flex-start;
-    font-size: .8rem;
+    font-size: 0.7rem;
 }
 
 .about-content p {
-    grid-area: paragraph;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    line-height: 1.5;
 }
 
+/* Terminal area */
+.terminal-area {
+    grid-area: terminal;
+}
+
+/* Photo wrapper with glow */
 .photo-wrapper {
     position: relative;
     grid-area: photo;
     transition: width 1s ease;
+}
 
+.photo-glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        #3b82f6,
+        #06b6d4,
+        #8b5cf6,
+        #3b82f6
+    );
+    opacity: 0.55;
+    filter: blur(12px);
+    z-index: 1;
+    animation: glow-rotate 4s linear infinite;
+}
+
+@keyframes glow-rotate {
+    0% { filter: blur(12px) hue-rotate(0deg); }
+    100% { filter: blur(12px) hue-rotate(360deg); }
 }
 
 .about-photo {
@@ -94,13 +116,14 @@
     object-position: 0 -40px;
     width: 100%;
     height: 100%;
-    object-fit:  cover;
+    object-fit: cover;
 }
 
+/* Icons */
 .icons-container {
     grid-area: icons;
     display: flex;
-    gap: .5rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
 }
 
@@ -108,25 +131,26 @@
     width: auto;
 }
 
+/* Responsive */
 @media (max-width: 1372px) {
-    .about-me-container.threshold{
+    .about-me-container.threshold {
         padding: 2rem;
     }
 
     .about-content.threshold h1 {
-        font-size: .8rem;
+        font-size: 0.75rem;
         margin-block: 0;
     }
 
     .about-content.threshold h2 {
-        font-size: .7rem;
+        font-size: 0.6rem;
         margin-block: 0;
     }
 }
 
 @media (max-width: 1184px) {
     .photo-wrapper {
-        max-width: 300px;
+        max-width: 280px;
     }
 
     .about-content {
@@ -134,38 +158,36 @@
     }
 
     .about-content h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 
     .about-content h2 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 }
 
 @media (max-width: 1070px) {
-    .about-me-container.threshold{
+    .about-me-container.threshold {
         padding: 1rem;
     }
 
-    .about-content.threshold{
+    .about-content.threshold {
         grid-template-areas:
-        "photo title"
-        "photo sub-title"
-        "paragraph paragraph"
-        "icons icons";
+            "photo terminal"
+            "icons icons";
         column-gap: 1rem;
     }
 
     .about-content.threshold h1 {
-        font-size: .7rem;
+        font-size: 0.65rem;
     }
 
     .about-content.threshold h2 {
-        font-size: .6rem;
+        font-size: 0.55rem;
     }
 
     .about-content.threshold p {
-        font-size: .9rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -175,46 +197,48 @@
     }
 
     .about-content h1 {
-        font-size: 1.6rem;
-    }
-
-    .about-content h2 {
-        font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 856px) {
-    .about-content{
-        grid-template-areas:
-        "photo ."
-        "photo title"
-        "photo sub-title"
-        "photo paragraph"
-        "icons icons"
-        ". .";
-        justify-content: center;
-        align-items: center;
-        column-gap: 1rem;
-    }
-
-    .about-content h1 {
         font-size: 1.4rem;
     }
 
     .about-content h2 {
         font-size: 1rem;
     }
+}
+
+@media (max-width: 856px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "photo"
+            "terminal"
+            "icons";
+        justify-items: center;
+        column-gap: 0;
+        row-gap: 1.5rem;
+    }
+
+    .photo-wrapper {
+        max-width: 180px;
+    }
+
+    .about-content h1 {
+        font-size: 1.2rem;
+    }
+
+    .about-content h2 {
+        font-size: 0.9rem;
+    }
 
     .about-content p {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 
     .icons-container {
-        margin-top: 2rem;
+        justify-content: center;
     }
-  }
+}
 
-/* Hero fade-in animations for paragraph and icons */
+/* Hero fade-in animations for paragraph, badges and icons */
 .hero-fade-in {
     opacity: 0;
     transform: translateY(12px);

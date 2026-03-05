@@ -69,11 +69,13 @@ const Portfolio: React.FC = () => {
         overflowY={scrollVal === threshold ? "auto" : "hidden"} 
         thresholdReached={scrollVal !== threshold} />
 
-      <div className="scroll-indicator">
-        <div style={scrollVal != 0? {opacity: 0} : {}}>
-          <span>Scroll</span>
-          <ChevronsDown className="scroll-icon" size={24} color={isDark? "white" : "black"} />
+      <div className="scroll-indicator" style={scrollVal !== 0 ? { opacity: 0, pointerEvents: "none" } : {}}>
+        <div className="scroll-line" />
+        <div className="scroll-label">
+          <span>{'> '}Scroll</span>
+          <ChevronsDown className="scroll-icon" size={20} color={isDark ? "white" : "black"} />
         </div>
+        <div className="scroll-line" />
       </div>
     </div>
   );
