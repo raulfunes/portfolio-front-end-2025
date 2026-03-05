@@ -11,7 +11,7 @@
 
 .experience-header h2 {
 	font-size: 1.25rem;
-	color: #06139b;
+	color: #22c55e;
 	margin: 0 0 12px 0;
 	letter-spacing: 2px;
 }
@@ -19,7 +19,7 @@
 .experience-subtitle {
 	font-family: 'VT323', monospace;
 	font-size: 1.25rem;
-	color: #666;
+	color: #555;
 	margin: 0;
 }
 
@@ -32,23 +32,24 @@
 
 /* Card */
 .experience-card {
-	background: #fafafa;
-	border: 3px solid #1a1a2e;
+	background: #1a1a2e;
+	border: 3px solid #2d2d44;
 	border-radius: 0;
 	position: relative;
 	cursor: pointer;
 	transition: all 0.2s ease;
-	box-shadow: 4px 4px 0 #1a1a2e;
+	box-shadow: 4px 4px 0 #0d0d15;
 }
 
 .experience-card:hover {
 	transform: translate(-2px, -2px);
-	box-shadow: 6px 6px 0 #1a1a2e;
+	box-shadow: 6px 6px 0 #0d0d15;
+	border-color: #22c55e;
 }
 
 .experience-card.expanded {
-	border-color: #06139b;
-	box-shadow: 4px 4px 0 #06139b;
+	border-color: #22c55e;
+	box-shadow: 4px 4px 0 #22c55e;
 }
 
 /* Card Header with Year */
@@ -64,12 +65,12 @@
 
 .experience-year-badge .pixel-border {
 	display: inline-block;
-	background: #06139b;
-	color: #fff;
+	background: #22c55e;
+	color: #0d0d15;
 	padding: 6px 12px;
 	font-family: 'Press Start 2P', cursive;
 	font-size: 0.65rem;
-	border: 2px solid #1a1a2e;
+	border: 2px solid #15803d;
 }
 
 .experience-connector {
@@ -82,15 +83,15 @@
 .connector-line {
 	flex: 1;
 	height: 2px;
-	background: linear-gradient(90deg, #06139b 50%, transparent 50%);
+	background: linear-gradient(90deg, #22c55e 50%, transparent 50%);
 	background-size: 8px 2px;
 }
 
 .connector-dot {
 	width: 12px;
 	height: 12px;
-	background: #06139b;
-	border: 2px solid #1a1a2e;
+	background: #22c55e;
+	border: 2px solid #15803d;
 	margin: 0 4px;
 }
 
@@ -116,7 +117,7 @@
 .experience-title {
 	font-family: 'Press Start 2P', cursive;
 	font-size: 0.85rem;
-	color: #1a1a2e;
+	color: #f0f0f0;
 	margin: 0 0 8px 0;
 	line-height: 1.5;
 }
@@ -124,7 +125,7 @@
 .experience-company {
 	font-family: 'VT323', monospace;
 	font-size: 1.5rem;
-	color: #06139b;
+	color: #22c55e;
 	margin: 0;
 	display: flex;
 	align-items: center;
@@ -132,7 +133,7 @@
 }
 
 .company-icon {
-	color: #06139b;
+	color: #22c55e;
 	animation: blink 1s infinite;
 }
 
@@ -152,27 +153,27 @@
 	font-family: 'VT323', monospace;
 	font-size: 1rem;
 	padding: 4px 10px;
-	border: 2px solid #1a1a2e;
-	background: #fff;
-	color: #1a1a2e;
+	border: 2px solid #3d3d5c;
+	background: #2d2d44;
+	color: #a0a0b0;
 }
 
 .meta-badge.location {
-	background: #e8f4f8;
-	border-color: #0ea5e9;
-	color: #0369a1;
+	background: #1a2e1a;
+	border-color: #22c55e;
+	color: #4ade80;
 }
 
 .meta-badge.type {
-	background: #f0fdf4;
+	background: #1a2e1a;
 	border-color: #22c55e;
-	color: #15803d;
+	color: #4ade80;
 }
 
 .meta-badge.duration {
-	background: #fef3c7;
-	border-color: #f59e0b;
-	color: #b45309;
+	background: #2e2a1a;
+	border-color: #eab308;
+	color: #facc15;
 }
 
 /* Description */
@@ -180,10 +181,10 @@
 	font-family: 'VT323', monospace;
 	font-size: 1.25rem;
 	line-height: 1.5;
-	color: #444;
+	color: #c0c0c0;
 	margin: 0 0 16px 0;
 	padding-bottom: 16px;
-	border-bottom: 2px dashed #ddd;
+	border-bottom: 2px dashed #3d3d5c;
 }
 
 /* Expandable Details */
@@ -202,15 +203,15 @@
 
 .achievements-section {
 	padding: 16px;
-	background: #f0f9ff;
-	border: 2px solid #0ea5e9;
+	background: #0d1a0d;
+	border: 2px solid #22c55e;
 	margin-bottom: 16px;
 }
 
 .section-title {
 	font-family: 'Press Start 2P', cursive;
 	font-size: 0.6rem;
-	color: #0369a1;
+	color: #4ade80;
 	margin: 0 0 12px 0;
 	display: flex;
 	align-items: center;
@@ -218,7 +219,7 @@
 }
 
 .title-icon {
-	color: #f59e0b;
+	color: #facc15;
 }
 
 .achievements-list {
@@ -233,14 +234,14 @@
 .achievement-item {
 	font-family: 'VT323', monospace;
 	font-size: 1.15rem;
-	color: #1a1a2e;
+	color: #e0e0e0;
 	display: flex;
 	align-items: flex-start;
 	gap: 8px;
 }
 
 .bullet {
-	color: #22c55e;
+	color: #4ade80;
 	font-weight: bold;
 	flex-shrink: 0;
 }
@@ -260,33 +261,34 @@
 	font-family: 'VT323', monospace;
 	font-size: 1rem;
 	padding: 4px 12px;
-	background: #1a1a2e;
+	background: #0d0d15;
 	color: #4ade80;
-	border: none;
+	border: 1px solid #22c55e;
 	transition: all 0.15s ease;
 }
 
 .tech-tag:hover {
-	background: #06139b;
-	color: #fff;
+	background: #22c55e;
+	color: #0d0d15;
 }
 
 /* Expand Indicator */
 .expand-indicator {
 	text-align: center;
 	padding-top: 12px;
-	border-top: 2px dashed #ddd;
+	border-top: 2px dashed #3d3d5c;
 }
 
 .expand-indicator span {
 	font-family: 'VT323', monospace;
 	font-size: 1rem;
-	color: #06139b;
+	color: #22c55e;
 	cursor: pointer;
 }
 
 .expand-indicator span:hover {
 	text-decoration: underline;
+	color: #4ade80;
 }
 
 /* Responsive */
