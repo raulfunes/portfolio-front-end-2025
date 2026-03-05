@@ -2,17 +2,15 @@ import React, { useState, useCallback } from "react";
 import "./AboutMe.css";
 import IconsComponent from "../components/IconsComponent";
 import { useTranslation } from "react-i18next";
-import RetroParticles from "../components/RetroParticles";
 import TypewriterText from "../components/TypewriterText";
 
 interface AboutMeProps {
 	aboutWidth: number;
 	aboutWidthStr: string;
 	thresholdReached: boolean;
-	isDark: boolean;
 }
 
-const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdReached, isDark }) => {
+const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdReached }) => {
 	const { t } = useTranslation();
 	const [titleDone, setTitleDone] = useState(false);
 	const [subtitleDone, setSubtitleDone] = useState(false);
@@ -22,7 +20,6 @@ const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdR
 
 	return (
 		<div style={{ width: aboutWidthStr }} className={thresholdReached ? "about-me-container" : "about-me-container threshold"}>
-			<RetroParticles isDark={isDark} />
 			<div className={thresholdReached ? "about-content" : "about-content threshold"}>
 				<div style={{ width: aboutWidth * 2.5 }} className="photo-wrapper">
 					<div className="about-photo">

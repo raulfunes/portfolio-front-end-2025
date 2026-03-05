@@ -5,6 +5,7 @@ import { ChevronsDown } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { useDarkMode } from "../functions/useDarkMode";
 import RightPanel from "./RightPanel";
+import RetroParticles from "../components/RetroParticles";
 
 const Portfolio: React.FC = () => {
   const threshold = 300; // Umbral para la transición
@@ -52,13 +53,13 @@ const Portfolio: React.FC = () => {
   return (
     <div className={isDark? "portfolio-container dark" : "portfolio-container"}>
 
+      <RetroParticles isDark={isDark} />
       <Navbar isDark={isDark} toggle={toggle}/>
 
       <AboutMe 
         aboutWidth={aboutWidth} 
         aboutWidthStr={aboutWidthStr} 
-        thresholdReached={scrollVal !== threshold}
-        isDark={isDark}/>
+        thresholdReached={scrollVal !== threshold}/>
 
       <RightPanel 
         aboutWidthStr={aboutWidthStr} 

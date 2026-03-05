@@ -26,10 +26,7 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
   const animFrameRef = useRef<number>(0);
   const isDarkRef = useRef(isDark);
   const initializedRef = useRef(false);
-  const prevSizeRef = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
 
-  // Keep isDark in a ref so the animation loop always reads the latest value
-  // without needing to be in the useEffect dependency array.
   useEffect(() => {
     isDarkRef.current = isDark;
   }, [isDark]);
@@ -63,38 +60,15 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const resizeCanvas = () => {
-      const parent = canvas.parentElement;
-      if (!parent) return;
-
-      const newW = parent.clientWidth;
-      const newH = parent.clientHeight;
-
-      // On resize, rescale existing particle positions proportionally
-      // so they stay in the same relative spot inside the container.
-      if (
-        particlesRef.current.length > 0 &&
-        prevSizeRef.current.w > 0 &&
-        prevSizeRef.current.h > 0
-      ) {
-        const scaleX = newW / prevSizeRef.current.w;
-        const scaleY = newH / prevSizeRef.current.h;
-        particlesRef.current.forEach((p) => {
-          p.x *= scaleX;
-          p.y *= scaleY;
-        });
-      }
-
-      canvas.width = newW;
-      canvas.height = newH;
-      prevSizeRef.current = { w: newW, h: newH };
+    const setCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
-    resizeCanvas();
+    setCanvasSize();
 
-    // Only create particles on first mount -- never re-create.
-    const isFirstMount = !initializedRef.current;
-    if (isFirstMount) {
+    // Only create particles on first mount
+    if (!initializedRef.current) {
       initializedRef.current = true;
       particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () =>
         createParticle(canvas.width, canvas.height, false)
@@ -107,6 +81,23 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
       });
     }
 
+    const handleResize = () => {
+      const oldW = canvas.width;
+      const oldH = canvas.height;
+      setCanvasSize();
+      // Rescale particle positions proportionally
+      if (oldW > 0 && oldH > 0) {
+        const scaleX = canvas.width / oldW;
+        const scaleY = canvas.height / oldH;
+        particlesRef.current.forEach((p) => {
+          p.x *= scaleX;
+          p.y *= scaleY;
+        });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
     const animate = () => {
       if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -114,11 +105,9 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
       const color = isDarkRef.current ? "200, 210, 230" : "15, 30, 70";
 
       particlesRef.current.forEach((p) => {
-        // Update position
         p.x += p.speedX;
         p.y += p.speedY;
 
-        // Wrap around edges using current canvas dimensions
         if (p.y < -10) {
           p.y = canvas.height + 10;
           p.x = Math.random() * canvas.width;
@@ -126,7 +115,6 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
         if (p.x < -10) p.x = canvas.width + 10;
         if (p.x > canvas.width + 10) p.x = -10;
 
-        // Sparkle effect
         let currentOpacity = p.opacity;
         if (p.sparkle) {
           p.sparkleTimer++;
@@ -145,7 +133,6 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
           }
         }
 
-        // Draw pixel-style square
         ctx.fillStyle = `rgba(${color}, ${currentOpacity})`;
         ctx.fillRect(Math.round(p.x), Math.round(p.y), p.size, p.size);
       });
@@ -155,12 +142,9 @@ const RetroParticles: React.FC<RetroParticlesProps> = ({ isDark }) => {
 
     animate();
 
-    const resizeObserver = new ResizeObserver(resizeCanvas);
-    resizeObserver.observe(canvas.parentElement!);
-
     return () => {
       cancelAnimationFrame(animFrameRef.current);
-      resizeObserver.disconnect();
+      window.removeEventListener("resize", handleResize);
     };
   }, [createParticle]);
 
