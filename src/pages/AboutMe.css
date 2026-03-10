@@ -379,3 +379,276 @@
         justify-content: center;
     }
 }
+
+/* ===========================
+   EDIT MODE STYLES
+   =========================== */
+.roles-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px dashed #22c55e;
+    border-radius: 8px;
+}
+
+.roles-editor-title {
+    font-family: 'VT323', monospace;
+    color: #22c55e;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.role-edit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.role-edit-input {
+    flex: 1;
+    background: #1a1a2e;
+    border: 1px solid #333;
+    color: #fff;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.role-edit-input:focus {
+    outline: none;
+    border-color: #22c55e;
+}
+
+.role-delete-btn {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.role-delete-btn:hover {
+    transform: scale(1.2);
+}
+
+.role-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px dashed #22c55e;
+    color: #22c55e;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+}
+
+.role-add-btn:hover {
+    background: rgba(34, 197, 94, 0.1);
+    border-style: solid;
+}
+
+/* Description editable */
+.description-editable {
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.description-editable:hover {
+    background: rgba(34, 197, 94, 0.1);
+    outline: 1px dashed #22c55e;
+}
+
+.description-edit-textarea {
+    width: 100%;
+    min-height: 100px;
+    background: #1a1a2e;
+    border: 1px solid #22c55e;
+    color: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 10px;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.description-edit-textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+}
+
+.description-edit-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    justify-content: flex-end;
+}
+
+.description-save-btn,
+.description-cancel-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.description-save-btn {
+    background: #22c55e;
+    color: #000;
+}
+
+.description-save-btn:hover {
+    background: #16a34a;
+}
+
+.description-cancel-btn {
+    background: transparent;
+    border: 1px solid #666;
+    color: #fff;
+}
+
+.description-cancel-btn:hover {
+    border-color: #ff4d4d;
+    color: #ff4d4d;
+}
+
+/* Role container with edit button */
+.role-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.edit-roles-btn {
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid #22c55e;
+    color: #22c55e;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.edit-roles-btn:hover {
+    background: rgba(34, 197, 94, 0.3);
+}
+
+/* Roles editor header */
+.roles-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'VT323', monospace;
+    color: #22c55e;
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.roles-editor-header button {
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.roles-editor-header button:hover {
+    color: #ff4d4d;
+}
+
+/* Roles list */
+.roles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.role-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.role-item span {
+    flex: 1;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.role-edit-btn,
+.role-save-btn,
+.role-cancel-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.role-edit-btn {
+    color: #22c55e;
+}
+
+.role-save-btn {
+    color: #22c55e;
+}
+
+.role-cancel-btn {
+    color: #888;
+}
+
+.role-edit-btn:hover,
+.role-save-btn:hover {
+    transform: scale(1.2);
+}
+
+.role-cancel-btn:hover {
+    color: #ff4d4d;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

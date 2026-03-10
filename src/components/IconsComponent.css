@@ -109,3 +109,108 @@
 .edit-mode {
     flex-wrap: wrap;
 }
+
+/* No click in edit mode */
+.icon.no-click {
+    cursor: default;
+    pointer-events: none;
+}
+
+.icon-wrapper {
+    pointer-events: auto;
+}
+
+/* Edit button */
+.icon-edit-btn {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    background: rgba(34, 197, 94, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    opacity: 0;
+}
+
+.icon-wrapper:hover .icon-edit-btn {
+    opacity: 1;
+}
+
+.icon-edit-btn:hover {
+    background: #22c55e;
+    transform: scale(1.1);
+}
+
+/* Icon label */
+.icon-label {
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* Edit form */
+.icon-edit-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #22c55e;
+}
+
+.icon-edit-input {
+    background: #1a1a2e;
+    border: 1px solid #333;
+    color: #fff;
+    font-family: 'VT323', monospace;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    width: 80px;
+}
+
+.icon-edit-input.url {
+    width: 150px;
+}
+
+.icon-edit-input:focus {
+    outline: none;
+    border-color: #22c55e;
+}
+
+.icon-edit-save,
+.icon-edit-cancel {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.icon-edit-save {
+    color: #22c55e;
+}
+
+.icon-edit-save:hover {
+    background: rgba(34, 197, 94, 0.2);
+}
+
+.icon-edit-cancel {
+    color: #ff4d4d;
+}
+
+.icon-edit-cancel:hover {
+    background: rgba(255, 77, 77, 0.2);
+}

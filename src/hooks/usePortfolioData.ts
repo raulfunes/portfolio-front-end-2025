@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { supabase, Project, Experience, TechCategory, Technology, PersonalInfo, ContactLink } from '../lib/supabase'
+import { supabase, Project, Experience, TechCategory, Technology, PersonalInfo, ContactLink, HeroTech, HeroRole } from '../lib/supabase'
 
 // Generic fetcher for Supabase
 const fetcher = async <T>(table: string, orderBy?: string): Promise<T[]> => {
@@ -234,6 +234,86 @@ export function useContactLinks() {
     updateLink,
     createLink,
     deleteLink,
+    mutate
+  }
+}
+
+// Hero techs hook (tech badges in AboutMe)
+export function useHeroTechs() {
+  const { data, error, isLoading, mutate } = useSWR<HeroTech[]>(
+    'hero_techs',
+    () => fetcher<HeroTech>('hero_techs', 'sort_order')
+  )
+
+  const updateTech = async (id: string, updates: Partial<HeroTech>) => {
+    const { error } = await supabase
+      .from('hero_techs')
+      .update(updates)
+      .eq('id', id)
+    
+    if (error) throw error
+    mutate()
+  }
+
+  const createTech = async (tech: Omit<HeroTech, 'id'>) => {
+    const { error } = await supabase.from('hero_techs').insert(tech)
+    if (error) throw error
+    mutate()
+  }
+
+  const deleteTech = async (id: string) => {
+    const { error } = await supabase.from('hero_techs').delete().eq('id', id)
+    if (error) throw error
+    mutate()
+  }
+
+  return {
+    techs: data ?? [],
+    isLoading,
+    error,
+    updateTech,
+    createTech,
+    deleteTech,
+    mutate
+  }
+}
+
+// Hero roles hook (rotating roles in AboutMe)
+export function useHeroRoles() {
+  const { data, error, isLoading, mutate } = useSWR<HeroRole[]>(
+    'hero_roles',
+    () => fetcher<HeroRole>('hero_roles', 'sort_order')
+  )
+
+  const updateRole = async (id: string, updates: Partial<HeroRole>) => {
+    const { error } = await supabase
+      .from('hero_roles')
+      .update(updates)
+      .eq('id', id)
+    
+    if (error) throw error
+    mutate()
+  }
+
+  const createRole = async (role: Omit<HeroRole, 'id'>) => {
+    const { error } = await supabase.from('hero_roles').insert(role)
+    if (error) throw error
+    mutate()
+  }
+
+  const deleteRole = async (id: string) => {
+    const { error } = await supabase.from('hero_roles').delete().eq('id', id)
+    if (error) throw error
+    mutate()
+  }
+
+  return {
+    roles: data ?? [],
+    isLoading,
+    error,
+    updateRole,
+    createRole,
+    deleteRole,
     mutate
   }
 }

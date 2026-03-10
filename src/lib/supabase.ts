@@ -81,3 +81,17 @@ export interface ContactLink {
   icon: string | null
   sort_order: number
 }
+
+export interface HeroTech {
+  id: string
+  name: string
+  color: string
+  sort_order: number
+}
+
+export interface HeroRole {
+  id: string
+  role_es: string
+  role_en: string
+  sort_order: number
+}
