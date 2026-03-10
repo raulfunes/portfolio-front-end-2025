@@ -136,6 +136,19 @@ export function useTechnologies() {
     mutateCategories()
   }
 
+  const createCategory = async (category: Omit<TechCategory, 'id'>) => {
+    const { error } = await supabase.from('tech_categories').insert(category)
+    if (error) throw error
+    mutateCategories()
+  }
+
+  const deleteCategory = async (id: string) => {
+    const { error } = await supabase.from('tech_categories').delete().eq('id', id)
+    if (error) throw error
+    mutateCategories()
+    mutateTechnologies()
+  }
+
   // Group technologies by category
   const categoriesWithTech = categories?.map(cat => ({
     ...cat,
@@ -150,6 +163,8 @@ export function useTechnologies() {
     createTechnology,
     deleteTechnology,
     updateCategory,
+    createCategory,
+    deleteCategory,
     mutate: () => {
       mutateCategories()
       mutateTechnologies()
