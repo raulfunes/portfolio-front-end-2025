@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useEditMode } from '../contexts/EditModeContext'
 import { Pencil, LogOut, X, Globe, FlaskConical } from 'lucide-react'
