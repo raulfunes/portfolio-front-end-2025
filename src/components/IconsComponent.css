@@ -53,3 +53,59 @@
         margin-top: 0.5rem;
     }
 }
+
+/* Edit mode styles */
+.icon-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.icon-delete-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: rgba(255, 77, 77, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    opacity: 0;
+}
+
+.icon-wrapper:hover .icon-delete-btn {
+    opacity: 1;
+}
+
+.icon-delete-btn:hover {
+    background: #ff4d4d;
+    transform: scale(1.1);
+}
+
+.icon-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px dashed #22c55e;
+    color: #22c55e;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon-add-btn:hover {
+    background: rgba(34, 197, 94, 0.1);
+    border-style: solid;
+}
+
+.edit-mode {
+    flex-wrap: wrap;
+}

@@ -348,3 +348,70 @@
 		display: none;
 	}
 }
+
+/* Loading state */
+.experience-loading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	padding: 4rem;
+	color: #888;
+	font-family: 'VT323', monospace;
+	font-size: 1.25rem;
+}
+
+.experience-loading .spin {
+	animation: spin 1s linear infinite;
+	color: #22c55e;
+}
+
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+/* Edit mode styles */
+.experience-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 10;
+	background: rgba(255, 77, 77, 0.9);
+	border: none;
+	border-radius: 4px;
+	padding: 6px;
+	cursor: pointer;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s;
+}
+
+.experience-delete-btn:hover {
+	background: #ff4d4d;
+	transform: scale(1.1);
+}
+
+.experience-add-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	background: transparent;
+	border: 3px dashed #22c55e;
+	min-height: 200px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: #22c55e;
+	font-family: 'VT323', monospace;
+	font-size: 1.25rem;
+}
+
+.experience-add-card:hover {
+	background: rgba(34, 197, 94, 0.1);
+	border-style: solid;
+}

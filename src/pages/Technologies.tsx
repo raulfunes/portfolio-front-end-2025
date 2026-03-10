@@ -1,62 +1,27 @@
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { useTechnologies } from "../hooks/usePortfolioData";
+import { useEditMode } from "../contexts/EditModeContext";
+import { EditableText } from "../components/editable";
+import { Plus, Trash2, Loader2 } from "lucide-react";
 import './Technologies.css';
 
-type Technology = {
-  name: string;
-  level: number;
-  color: string;
-};
-
-type TechCategory = {
-  id: string;
-  title: string;
-  icon: string;
-  technologies: Technology[];
-};
-
-const techCategories: TechCategory[] = [
-  {
-    id: "frontend",
-    title: "Frontend",
-    icon: "[>_]",
-    technologies: [
-      { name: "React", level: 90, color: "#61DAFB" },
-      { name: "TypeScript", level: 85, color: "#3178C6" },
-      { name: "Next.js", level: 80, color: "#ffffff" },
-      { name: "Tailwind CSS", level: 85, color: "#06B6D4" },
-      { name: "Vue.js", level: 70, color: "#4FC08D" },
-    ],
-  },
-  {
-    id: "backend",
-    title: "Backend",
-    icon: "[~/]",
-    technologies: [
-      { name: "Node.js", level: 85, color: "#68A063" },
-      { name: "Python", level: 75, color: "#3776AB" },
-      { name: "Express", level: 80, color: "#ffffff" },
-      { name: "PostgreSQL", level: 75, color: "#4169E1" },
-      { name: "MongoDB", level: 70, color: "#47A248" },
-    ],
-  },
-  {
-    id: "devops",
-    title: "DevOps & Tools",
-    icon: "[#!]",
-    technologies: [
-      { name: "Git", level: 90, color: "#F05032" },
-      { name: "Docker", level: 75, color: "#2496ED" },
-      { name: "AWS", level: 65, color: "#FF9900" },
-      { name: "Linux", level: 70, color: "#FCC624" },
-      { name: "CI/CD", level: 70, color: "#22c55e" },
-    ],
-  },
-];
-
 export const TechnologiesSection = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("frontend");
+  const { i18n } = useTranslation();
+  const lang = i18n.language as 'es' | 'en';
+  const { categories, isLoading, updateTechnology, createTechnology, deleteTechnology } = useTechnologies();
+  const { isEditMode } = useEditMode();
+
+  const [activeCategory, setActiveCategory] = useState<string>("");
   const [visibleBars, setVisibleBars] = useState<Set<string>>(new Set());
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Set initial category when data loads
+  useEffect(() => {
+    if (categories.length > 0 && !activeCategory) {
+      setActiveCategory(categories[0].slug);
+    }
+  }, [categories, activeCategory]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -79,29 +44,62 @@ export const TechnologiesSection = () => {
     bars?.forEach((bar) => observer.observe(bar));
 
     return () => observer.disconnect();
-  }, [activeCategory]);
+  }, [activeCategory, categories]);
 
-  const currentCategory = techCategories.find((c) => c.id === activeCategory);
+  const currentCategory = categories.find((c) => c.slug === activeCategory);
+
+  const handleAddTechnology = async () => {
+    if (!currentCategory) return;
+    await createTechnology({
+      category_id: currentCategory.id,
+      name: 'Nueva Tecnologia',
+      level: 50,
+      color: '#ffffff',
+      sort_order: (currentCategory.technologies?.length || 0) + 1
+    });
+  };
+
+  const handleDeleteTechnology = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (confirm('¿Eliminar esta tecnologia?')) {
+      await deleteTechnology(id);
+    }
+  };
+
+  const handleLevelChange = async (id: string, newLevel: number) => {
+    await updateTechnology(id, { level: Math.max(0, Math.min(100, newLevel)) });
+  };
+
+  if (isLoading) {
+    return (
+      <section className="technologies-section">
+        <div className="technologies-loading">
+          <Loader2 className="spin" size={32} />
+          <span>Cargando tecnologias...</span>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="technologies-section" ref={sectionRef}>
       <div className="technologies-header">
-        <h2 className="technologies-title">{"<"} Tecnologias {"/>"}</h2>
+        <h2 className="technologies-title">{"<"} {lang === 'es' ? 'Tecnologias' : 'Technologies'} {"/>"}</h2>
         <p className="technologies-subtitle">cat skills.json | jq '.technologies'</p>
       </div>
 
       <div className="category-tabs">
-        {techCategories.map((category) => (
+        {categories.map((category) => (
           <button
             key={category.id}
-            className={`category-tab ${activeCategory === category.id ? 'active' : ''}`}
+            className={`category-tab ${activeCategory === category.slug ? 'active' : ''}`}
             onClick={() => {
-              setActiveCategory(category.id);
+              setActiveCategory(category.slug);
               setVisibleBars(new Set());
             }}
           >
-            <span className="tab-icon">{category.icon}</span>
-            <span className="tab-title">{category.title}</span>
+            <span className="tab-icon">[{category.icon.charAt(0)}]</span>
+            <span className="tab-title">{lang === 'es' ? category.title_es : category.title_en}</span>
           </button>
         ))}
       </div>
@@ -118,30 +116,60 @@ export const TechnologiesSection = () => {
           <div className="terminal-body">
             <div className="terminal-output">
               <span className="output-prefix">$</span>
-              <span className="output-text">Mostrando habilidades de {currentCategory?.title}...</span>
+              <span className="output-text">
+                {lang === 'es' ? 'Mostrando habilidades de' : 'Showing skills for'} {currentCategory ? (lang === 'es' ? currentCategory.title_es : currentCategory.title_en) : ''}...
+              </span>
             </div>
 
             <div className="skills-list">
               {currentCategory?.technologies.map((tech, index) => (
                 <div
-                  key={tech.name}
+                  key={tech.id}
                   className="skill-item"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="skill-header">
                     <span className="skill-name" style={{ color: tech.color }}>
-                      {tech.name}
+                      <EditableText
+                        value={tech.name}
+                        onSave={async (newValue) => {
+                          await updateTechnology(tech.id, { name: newValue });
+                        }}
+                        table="technologies"
+                        id={tech.id}
+                        field="name"
+                      />
                     </span>
-                    <span className="skill-level">{tech.level}%</span>
+                    <div className="skill-level-wrapper">
+                      {isEditMode ? (
+                        <input
+                          type="number"
+                          value={tech.level}
+                          onChange={(e) => handleLevelChange(tech.id, parseInt(e.target.value) || 0)}
+                          className="skill-level-input"
+                          min={0}
+                          max={100}
+                        />
+                      ) : (
+                        <span className="skill-level">{tech.level}%</span>
+                      )}
+                      {isEditMode && (
+                        <button 
+                          className="skill-delete-btn"
+                          onClick={(e) => handleDeleteTechnology(tech.id, e)}
+                          title="Eliminar"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      )}
+                    </div>
                   </div>
                   
                   <div 
                     className="skill-bar-container" 
                     data-tech={`${activeCategory}-${tech.name}`}
                   >
-                    <div 
-                      className="skill-bar-bg"
-                    >
+                    <div className="skill-bar-bg">
                       <div
                         className={`skill-bar-fill ${visibleBars.has(`${activeCategory}-${tech.name}`) ? 'animated' : ''}`}
                         style={{ 
@@ -165,6 +193,13 @@ export const TechnologiesSection = () => {
                   </div>
                 </div>
               ))}
+
+              {isEditMode && (
+                <button className="skill-add-btn" onClick={handleAddTechnology}>
+                  <Plus size={16} />
+                  <span>{lang === 'es' ? 'Agregar Tecnologia' : 'Add Technology'}</span>
+                </button>
+              )}
             </div>
 
             <div className="terminal-cursor">

@@ -265,4 +265,76 @@
     justify-content: center;
   }
 }
-  
+
+/* Loading state */
+.technologies-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem;
+  color: #888;
+  font-family: 'VT323', monospace;
+  font-size: 1.25rem;
+}
+
+.technologies-loading .spin {
+  animation: spin 1s linear infinite;
+  color: #22c55e;
+}
+
+/* Edit mode styles */
+.skill-level-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skill-level-input {
+  width: 60px;
+  background: #1a1a2e;
+  border: 1px solid #22c55e;
+  color: #fff;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.skill-delete-btn {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.skill-delete-btn:hover {
+  transform: scale(1.2);
+}
+
+.skill-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 2px dashed #22c55e;
+  color: #22c55e;
+  padding: 12px;
+  cursor: pointer;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.skill-add-btn:hover {
+  background: rgba(34, 197, 94, 0.1);
+  border-style: solid;
+}
+
