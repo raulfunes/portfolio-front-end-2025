@@ -129,7 +129,22 @@ export const TechnologiesSection = () => {
   };
 
   const handleLevelChange = async (id: string, newLevel: number) => {
-    await updateTechnology(id, { level: Math.max(0, Math.min(100, newLevel)) });
+    const clamped = Math.max(0, Math.min(100, newLevel));
+    await updateTechnology(id, { level: clamped });
+
+    // Re-sort remaining items by level desc and persist sort_order
+    if (currentCategory) {
+      const updated = currentCategory.technologies
+        .map((t) => (t.id === id ? { ...t, level: clamped } : t))
+        .sort((a, b) => b.level - a.level);
+      await Promise.all(
+        updated.map((t, i) => updateTechnology(t.id, { sort_order: i + 1 }))
+      );
+    }
+  };
+
+  const handleColorChange = async (id: string, color: string) => {
+    await updateTechnology(id, { color });
   };
 
   if (isLoading) {
@@ -279,24 +294,42 @@ export const TechnologiesSection = () => {
             </div>
 
             <div className="skills-list">
-              {currentCategory?.technologies.map((tech, index) => (
+              {[...(currentCategory?.technologies ?? [])]
+                .sort((a, b) => b.level - a.level)
+                .map((tech, index) => (
                 <div
                   key={tech.id}
                   className="skill-item"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="skill-header">
-                    <span className="skill-name" style={{ color: tech.color }}>
-                      <EditableText
-                        value={tech.name}
-                        onSave={async (newValue) => {
-                          await updateTechnology(tech.id, { name: newValue });
-                        }}
-                        table="technologies"
-                        id={tech.id}
-                        field="name"
-                      />
-                    </span>
+                    <div className="skill-name-group">
+                      {isEditMode && (
+                        <div className="skill-color-wrapper" title="Cambiar color">
+                          <input
+                            type="color"
+                            value={tech.color}
+                            onChange={(e) => handleColorChange(tech.id, e.target.value)}
+                            className="skill-color-input"
+                          />
+                          <span
+                            className="skill-color-swatch"
+                            style={{ background: tech.color }}
+                          />
+                        </div>
+                      )}
+                      <span className="skill-name" style={{ color: tech.color }}>
+                        <EditableText
+                          value={tech.name}
+                          onSave={async (newValue) => {
+                            await updateTechnology(tech.id, { name: newValue });
+                          }}
+                          table="technologies"
+                          id={tech.id}
+                          field="name"
+                        />
+                      </span>
+                    </div>
                     <div className="skill-level-wrapper">
                       {isEditMode ? (
                         <input
