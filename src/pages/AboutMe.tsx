@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import "./AboutMe.css";
 import IconsComponent from "../components/IconsComponent";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,7 @@ import RotatingRole from "../components/RotatingRole";
 import { useHeroRoles, usePersonalInfo } from "../hooks/usePortfolioData";
 import { useEditMode } from "../contexts/EditModeContext";
 import { EditableTextarea } from "../components/editable";
-import { Plus, Trash2, Pencil, Check, X, Loader2 } from "lucide-react";
+import { Plus, Trash2, Pencil, Check, X, Loader2, Camera } from "lucide-react";
 
 interface AboutMeProps {
 	aboutWidth: number;
@@ -22,10 +22,54 @@ const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdR
 	const lang = i18n.language as 'es' | 'en';
 	const [titleDone, setTitleDone] = useState(false);
 	const [roleDone, setRoleDone] = useState(false);
-	
+
 	const { roles, isLoading: rolesLoading, updateRole, createRole, deleteRole } = useHeroRoles();
 	const { getInfo, updateInfo } = usePersonalInfo();
-	const { isEditMode, editLanguage } = useEditMode();
+	const { isEditMode, editLanguage, isDemoMode } = useEditMode();
+
+	// Photo upload state
+	const photoInputRef = useRef<HTMLInputElement>(null);
+	const [photoUploading, setPhotoUploading] = useState(false);
+	const [photoError, setPhotoError] = useState<string | null>(null);
+
+	const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		if (isDemoMode) {
+			const localUrl = URL.createObjectURL(file);
+			await updateInfo('profile_photo', localUrl, localUrl);
+			return;
+		}
+
+		const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+		if (!allowed.includes(file.type)) {
+			setPhotoError('Solo JPG, PNG, WEBP o GIF');
+			return;
+		}
+		if (file.size > 5 * 1024 * 1024) {
+			setPhotoError('Max 5 MB');
+			return;
+		}
+
+		setPhotoUploading(true);
+		setPhotoError(null);
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const res = await fetch('/api/upload-image', { method: 'POST', body: formData });
+			if (!res.ok) throw new Error('Upload failed');
+			const { url } = await res.json();
+			const currentEs = getInfo('profile_photo', 'es');
+			const currentEn = getInfo('profile_photo', 'en');
+			await updateInfo('profile_photo', currentEs ? url : url, currentEn ? url : url);
+		} catch {
+			setPhotoError('Error al subir');
+		} finally {
+			setPhotoUploading(false);
+			if (photoInputRef.current) photoInputRef.current.value = '';
+		}
+	};
 	
 	const [editingRoleId, setEditingRoleId] = useState<string | null>(null);
 	const [editRoleValue, setEditRoleValue] = useState("");
@@ -89,7 +133,42 @@ const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdR
 				<div style={{ width: aboutWidth * 2.5 }} className="photo-wrapper">
 					<div className="photo-glow" />
 					<div className="about-photo">
-						<img src="./src/assets/myself.JPG" alt="Raul Funes" />
+						{isEditMode ? (
+							<div
+								className="photo-upload-trigger"
+								onClick={() => !photoUploading && photoInputRef.current?.click()}
+							>
+								<img
+									src={getInfo('profile_photo', 'es') || './src/assets/myself.JPG'}
+									alt="Raul Funes"
+								/>
+								<div className="photo-upload-overlay">
+									{photoUploading ? (
+										<Loader2 size={24} className="spin" />
+									) : (
+										<>
+											<Camera size={24} />
+											<span>Cambiar foto</span>
+										</>
+									)}
+								</div>
+								{photoError && (
+									<div className="photo-upload-error">{photoError}</div>
+								)}
+								<input
+									ref={photoInputRef}
+									type="file"
+									accept="image/jpeg,image/png,image/webp,image/gif"
+									className="photo-upload-input"
+									onChange={handlePhotoChange}
+								/>
+							</div>
+						) : (
+							<img
+								src={getInfo('profile_photo', 'es') || './src/assets/myself.JPG'}
+								alt="Raul Funes"
+							/>
+						)}
 					</div>
 				</div>
 
