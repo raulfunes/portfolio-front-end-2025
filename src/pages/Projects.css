@@ -371,3 +371,230 @@
   background: rgba(34, 197, 94, 0.1);
   border-style: solid;
 }
+
+/* ===========================
+   EDITABLE STATUS BADGE
+   =========================== */
+.status-edit-wrapper {
+  position: relative;
+}
+
+.editable-status {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #0d0d15;
+  border: 1px solid;
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  padding: 2px 8px;
+  transition: filter 0.15s;
+}
+
+.editable-status:hover {
+  filter: brightness(1.4);
+  border-style: dashed;
+}
+
+.status-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 50;
+  background: #0d0d15;
+  border: 1px solid #22c55e;
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+}
+
+.status-option {
+  background: transparent;
+  border: none;
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.status-option.live   { color: #4ade80; }
+.status-option.development { color: #facc15; }
+.status-option.archived { color: #a0a0b0; }
+
+.status-option:hover,
+.status-option.active {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ===========================
+   EDITABLE TECH TAGS
+   =========================== */
+.edit-mode-tech {
+  flex-wrap: wrap;
+}
+
+.tech-badge-editable {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.tech-badge-editable:hover {
+  background: rgba(34, 197, 94, 0.2);
+  border-style: dashed;
+}
+
+.tech-tag-delete {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+
+.tech-badge-editable:hover .tech-tag-delete {
+  opacity: 1;
+}
+
+.tech-badge-editing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: #0d1a0d;
+  border: 1px solid #22c55e;
+}
+
+.tech-badge-input {
+  background: transparent;
+  border: none;
+  color: #4ade80;
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  width: 72px;
+  outline: none;
+}
+
+.tech-badge-action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.15s;
+  line-height: 1;
+}
+
+.tech-badge-action.save  { color: #22c55e; }
+.tech-badge-action.cancel { color: #ff4d4d; }
+.tech-badge-action:hover { transform: scale(1.2); }
+
+.tech-badge-add {
+  background: transparent;
+  border: 1px dashed #22c55e;
+  color: #22c55e;
+  cursor: pointer;
+  padding: 3px 8px;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.15s;
+  font-family: 'VT323', monospace;
+}
+
+.tech-badge-add:hover {
+  background: rgba(34, 197, 94, 0.15);
+  border-style: solid;
+}
+
+/* ===========================
+   EDITABLE LINKS
+   =========================== */
+.editable-link {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px dashed transparent;
+  transition: all 0.15s;
+  background: transparent;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+
+.editable-link.demo {
+  color: #4ade80;
+}
+
+.editable-link.github {
+  color: #a5b4fc;
+}
+
+.editable-link:hover {
+  border-style: dashed;
+  border-color: currentColor;
+  background: rgba(255,255,255,0.05);
+}
+
+.link-empty {
+  opacity: 0.45;
+  font-style: italic;
+}
+
+.project-link-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: #0d0d15;
+  border: 1px solid;
+  flex: 1;
+}
+
+.project-link-edit.demo   { border-color: #22c55e; }
+.project-link-edit.github { border-color: #6366f1; }
+
+.project-link-input {
+  background: transparent;
+  border: none;
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  outline: none;
+  flex: 1;
+  min-width: 120px;
+  color: inherit;
+}
+
+.project-link-action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.15s;
+}
+
+.project-link-action.save  { color: #22c55e; }
+.project-link-action.cancel { color: #ff4d4d; }
+.project-link-action:hover { transform: scale(1.2); }
+
+/* Year edit inline */
+.project-year-input {
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  color: #a0a0b0;
+}
