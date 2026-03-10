@@ -182,9 +182,71 @@
 
 .login-modal-footer {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--terminal-border-dim, #333);
+}
+
+/* Divider */
+.login-modal-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  color: var(--text-tertiary, #555);
+  font-size: 0.8rem;
+  font-family: var(--font-mono, monospace);
+}
+
+.login-modal-divider::before,
+.login-modal-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--terminal-border-dim, #333);
+}
+
+/* Demo button */
+.login-modal-demo {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  margin-top: 0.75rem;
+  background: transparent;
+  border: 1px dashed rgba(251, 191, 36, 0.5);
+  border-radius: 4px;
+  color: #fbbf24;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.login-modal-demo:hover {
+  background: rgba(251, 191, 36, 0.07);
+  border-style: solid;
+  border-color: #fbbf24;
+}
+
+.login-modal-demo svg {
+  flex-shrink: 0;
+  color: #fbbf24;
+}
+
+.demo-btn-title {
+  display: block;
+  font-size: 0.925rem;
+  font-weight: 600;
+  font-family: var(--font-mono, monospace);
+  color: #fbbf24;
+}
+
+.demo-btn-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(251, 191, 36, 0.6);
+  margin-top: 2px;
 }
 
 .login-modal-footer span {

@@ -1,20 +1,34 @@
 import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useEditMode } from '../contexts/EditModeContext'
-import { Pencil, LogOut, X, Globe } from 'lucide-react'
+import { Pencil, LogOut, X, Globe, FlaskConical } from 'lucide-react'
 import './EditToolbar.css'
 
 export function EditToolbar() {
   const { user, signOut, isAuthenticated } = useAuth()
-  const { isEditMode, editLanguage, setEditLanguage, toggleEditMode } = useEditMode()
+  const { isEditMode, isDemoMode, editLanguage, setEditLanguage, toggleEditMode, exitDemoMode } = useEditMode()
 
-  if (!isAuthenticated) return null
+  // Show toolbar when authenticated OR in demo mode
+  if (!isAuthenticated && !isDemoMode) return null
+
+  const handleExit = () => {
+    if (isDemoMode) {
+      exitDemoMode()
+    } else {
+      toggleEditMode()
+    }
+  }
 
   return (
-    <div className={`edit-toolbar ${isEditMode ? 'active' : ''}`}>
+    <div className={`edit-toolbar ${isEditMode ? 'active' : ''} ${isDemoMode ? 'demo' : ''}`}>
       <div className="edit-toolbar-content">
         <div className="edit-toolbar-status">
-          {isEditMode ? (
+          {isDemoMode ? (
+            <>
+              <FlaskConical size={15} className="demo-icon" />
+              <span className="status-text demo-text">Modo Demo</span>
+            </>
+          ) : isEditMode ? (
             <>
               <span className="status-dot active"></span>
               <span className="status-text">Modo Edicion</span>
@@ -43,27 +57,36 @@ export function EditToolbar() {
 
         <div className="edit-toolbar-actions">
           <button
-            className={`toolbar-btn ${isEditMode ? 'active' : ''}`}
-            onClick={toggleEditMode}
-            title={isEditMode ? 'Salir del modo edicion' : 'Entrar al modo edicion'}
+            className={`toolbar-btn ${isEditMode ? 'active' : ''} ${isDemoMode ? 'demo-exit' : ''}`}
+            onClick={handleExit}
+            title={isDemoMode ? 'Salir del modo demo' : isEditMode ? 'Salir del modo edicion' : 'Entrar al modo edicion'}
           >
             {isEditMode ? <X size={18} /> : <Pencil size={18} />}
             <span>{isEditMode ? 'Salir' : 'Editar'}</span>
           </button>
 
-          <button
-            className="toolbar-btn logout"
-            onClick={signOut}
-            title="Cerrar sesion"
-          >
-            <LogOut size={18} />
-          </button>
+          {isAuthenticated && !isDemoMode && (
+            <button
+              className="toolbar-btn logout"
+              onClick={signOut}
+              title="Cerrar sesion"
+            >
+              <LogOut size={18} />
+            </button>
+          )}
         </div>
       </div>
 
       {isEditMode && (
         <div className="edit-toolbar-hint">
-          <span>Haz clic en cualquier texto para editarlo</span>
+          {isDemoMode ? (
+            <>
+              <span className="demo-hint-badge">DEMO</span>
+              <span>Los cambios son solo visuales y no se guardan</span>
+            </>
+          ) : (
+            <span>Haz clic en cualquier texto para editarlo</span>
+          )}
           <span className="hint-shortcut">Ctrl+Shift+E para salir</span>
         </div>
       )}

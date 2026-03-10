@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { X, Lock, Mail, AlertCircle, Loader2 } from 'lucide-react'
+import { X, Lock, Mail, AlertCircle, Loader2, FlaskConical } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useEditMode } from '../contexts/EditModeContext'
 import './LoginModal.css'
 
 export function LoginModal() {
   const { signIn } = useAuth()
-  const { showLoginModal, setShowLoginModal, toggleEditMode } = useEditMode()
+  const { showLoginModal, setShowLoginModal, toggleEditMode, enterDemoMode } = useEditMode()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -29,7 +29,6 @@ export function LoginModal() {
       setEmail('')
       setPassword('')
       setLoading(false)
-      // Activate edit mode after successful login
       toggleEditMode()
     }
   }
@@ -39,6 +38,11 @@ export function LoginModal() {
     setEmail('')
     setPassword('')
     setError(null)
+  }
+
+  const handleDemoMode = () => {
+    setError(null)
+    enterDemoMode()
   }
 
   return (
@@ -109,6 +113,18 @@ export function LoginModal() {
             )}
           </button>
         </form>
+
+        <div className="login-modal-divider">
+          <span>o</span>
+        </div>
+
+        <button className="login-modal-demo" onClick={handleDemoMode}>
+          <FlaskConical size={18} />
+          <div>
+            <span className="demo-btn-title">Probar modo demo</span>
+            <span className="demo-btn-sub">Explora la edicion sin guardar cambios</span>
+          </div>
+        </button>
 
         <div className="login-modal-footer">
           <span>Ctrl + Shift + E para abrir este modal</span>

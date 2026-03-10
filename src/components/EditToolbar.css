@@ -194,3 +194,52 @@
     white-space: nowrap;
   }
 }
+
+/* ===========================
+   DEMO MODE STYLES
+   =========================== */
+.edit-toolbar.demo .edit-toolbar-content {
+  border-color: #fbbf24;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+}
+
+.demo-icon {
+  color: #fbbf24;
+  animation: pulse-yellow 2s infinite;
+}
+
+@keyframes pulse-yellow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+.demo-text {
+  color: #fbbf24 !important;
+}
+
+.toolbar-btn.demo-exit {
+  background: #fbbf24;
+  border-color: #fbbf24;
+  color: #1a1a2e;
+}
+
+.toolbar-btn.demo-exit:hover {
+  background: #fcd34d;
+  border-color: #fcd34d;
+  color: #1a1a2e;
+}
+
+.demo-hint-badge {
+  background: #fbbf24;
+  color: #1a1a2e;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.edit-toolbar.demo .edit-toolbar-hint {
+  color: rgba(251, 191, 36, 0.55);
+}

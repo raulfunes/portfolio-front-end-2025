@@ -13,9 +13,12 @@ interface PendingChange {
 
 interface EditModeContextType {
   isEditMode: boolean
+  isDemoMode: boolean
   editLanguage: EditLanguage
   pendingChanges: PendingChange[]
   toggleEditMode: () => void
+  enterDemoMode: () => void
+  exitDemoMode: () => void
   setEditLanguage: (lang: EditLanguage) => void
   addPendingChange: (change: Omit<PendingChange, 'oldValue'> & { oldValue?: unknown }) => void
   removePendingChange: (table: string, id: string, field: string) => void
@@ -30,17 +33,18 @@ const EditModeContext = createContext<EditModeContextType | undefined>(undefined
 export function EditModeProvider({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth()
   const [isEditMode, setIsEditMode] = useState(false)
+  const [isDemoMode, setIsDemoMode] = useState(false)
   const [editLanguage, setEditLanguage] = useState<EditLanguage>('es')
   const [pendingChanges, setPendingChanges] = useState<PendingChange[]>([])
   const [showLoginModal, setShowLoginModal] = useState(false)
 
-  // Disable edit mode if user logs out
+  // Disable edit mode if user logs out (but not if in demo mode)
   useEffect(() => {
-    if (!isAuthenticated && isEditMode) {
+    if (!isAuthenticated && isEditMode && !isDemoMode) {
       setIsEditMode(false)
       setPendingChanges([])
     }
-  }, [isAuthenticated, isEditMode])
+  }, [isAuthenticated, isEditMode, isDemoMode])
 
   // Keyboard shortcut: Ctrl+Shift+E
   useEffect(() => {
@@ -49,6 +53,10 @@ export function EditModeProvider({ children }: { children: React.ReactNode }) {
         e.preventDefault()
         if (isAuthenticated) {
           setIsEditMode(prev => !prev)
+          setIsDemoMode(false)
+        } else if (isDemoMode) {
+          setIsEditMode(false)
+          setIsDemoMode(false)
         } else {
           setShowLoginModal(true)
         }
@@ -57,19 +65,31 @@ export function EditModeProvider({ children }: { children: React.ReactNode }) {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isAuthenticated])
+  }, [isAuthenticated, isDemoMode])
 
   const toggleEditMode = useCallback(() => {
     if (isAuthenticated) {
       setIsEditMode(prev => !prev)
+      setIsDemoMode(false)
     } else {
       setShowLoginModal(true)
     }
   }, [isAuthenticated])
 
+  const enterDemoMode = useCallback(() => {
+    setIsDemoMode(true)
+    setIsEditMode(true)
+    setShowLoginModal(false)
+  }, [])
+
+  const exitDemoMode = useCallback(() => {
+    setIsDemoMode(false)
+    setIsEditMode(false)
+    setPendingChanges([])
+  }, [])
+
   const addPendingChange = useCallback((change: Omit<PendingChange, 'oldValue'> & { oldValue?: unknown }) => {
     setPendingChanges(prev => {
-      // Remove existing change for same field
       const filtered = prev.filter(
         c => !(c.table === change.table && c.id === change.id && c.field === change.field)
       )
@@ -89,9 +109,12 @@ export function EditModeProvider({ children }: { children: React.ReactNode }) {
 
   const value: EditModeContextType = {
     isEditMode,
+    isDemoMode,
     editLanguage,
     pendingChanges,
     toggleEditMode,
+    enterDemoMode,
+    exitDemoMode,
     setEditLanguage,
     addPendingChange,
     removePendingChange,
