@@ -348,3 +348,228 @@
 		display: none;
 	}
 }
+
+/* Loading state */
+.experience-loading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	padding: 4rem;
+	color: #888;
+	font-family: 'VT323', monospace;
+	font-size: 1.25rem;
+}
+
+.experience-loading .spin {
+	animation: spin 1s linear infinite;
+	color: #22c55e;
+}
+
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+/* Edit mode styles */
+.experience-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 10;
+	background: rgba(255, 77, 77, 0.9);
+	border: none;
+	border-radius: 4px;
+	padding: 6px;
+	cursor: pointer;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s;
+}
+
+.experience-delete-btn:hover {
+	background: #ff4d4d;
+	transform: scale(1.1);
+}
+
+.experience-add-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	background: transparent;
+	border: 3px dashed #22c55e;
+	min-height: 200px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: #22c55e;
+	font-family: 'VT323', monospace;
+	font-size: 1.25rem;
+}
+
+.experience-add-card:hover {
+	background: rgba(34, 197, 94, 0.1);
+	border-style: solid;
+}
+
+/* ===========================
+   EDITABLE META BADGES
+   =========================== */
+.meta-badge.period {
+	background: #2e1a2e;
+	border-color: #a855f7;
+	color: #d8b4fe;
+}
+
+.meta-badge-editable {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+	transition: all 0.15s;
+}
+
+.meta-badge-editable:hover {
+	filter: brightness(1.25);
+	border-style: dashed !important;
+}
+
+.meta-badge-pencil {
+	opacity: 0;
+	transition: opacity 0.15s;
+}
+
+.meta-badge-editable:hover .meta-badge-pencil {
+	opacity: 1;
+}
+
+.meta-badge-editing {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 6px;
+}
+
+.meta-badge-input {
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid currentColor;
+	color: inherit;
+	font-family: 'VT323', monospace;
+	font-size: 1rem;
+	width: 90px;
+	outline: none;
+}
+
+.meta-badge-action {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 2px;
+	display: flex;
+	align-items: center;
+	transition: transform 0.15s;
+}
+
+.meta-badge-action.save { color: #22c55e; }
+.meta-badge-action.cancel { color: #ff4d4d; }
+.meta-badge-action:hover { transform: scale(1.2); }
+
+/* Year badge in edit mode */
+.experience-year-badge .meta-badge {
+	display: inline-flex;
+	align-items: center;
+	background: #22c55e;
+	color: #0d0d15;
+	padding: 6px 12px;
+	font-family: 'Press Start 2P', cursive;
+	font-size: 0.65rem;
+	border: 2px solid #15803d;
+}
+
+.experience-year-badge .meta-badge-editable:hover {
+	background: #16a34a;
+}
+
+/* ===========================
+   EDITABLE TECH TAGS
+   =========================== */
+.tech-tag-editable {
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.tech-tag-editable:hover {
+	background: rgba(34, 197, 94, 0.25);
+}
+
+.tech-tag-delete {
+	background: transparent;
+	border: none;
+	color: #ff4d4d;
+	cursor: pointer;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	opacity: 0;
+	transition: opacity 0.15s;
+}
+
+.tech-tag-editable:hover .tech-tag-delete {
+	opacity: 1;
+}
+
+.tech-tag-editing {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 8px;
+	background: #0d1a0d;
+	border: 1px solid #22c55e;
+}
+
+.tech-tag-input {
+	background: transparent;
+	border: none;
+	color: #4ade80;
+	font-family: 'VT323', monospace;
+	font-size: 1rem;
+	width: 80px;
+	outline: none;
+}
+
+.tech-tag-action {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 2px;
+	display: flex;
+	align-items: center;
+	transition: transform 0.15s;
+}
+
+.tech-tag-action.save { color: #22c55e; }
+.tech-tag-action.cancel { color: #ff4d4d; }
+.tech-tag-action:hover { transform: scale(1.2); }
+
+.tech-tag-add {
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	border: 1px dashed #22c55e;
+	color: #22c55e;
+	background: transparent;
+	transition: all 0.15s;
+}
+
+.tech-tag-add:hover {
+	background: rgba(34, 197, 94, 0.15);
+	border-style: solid;
+}
