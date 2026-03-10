@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://raulfunes.dev/sitemap.xml
+Sitemap: https://v0-portfolio-raulfunes.vercel.app/sitemap.xml
