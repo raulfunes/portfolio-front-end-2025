@@ -243,7 +243,7 @@ export const Experience = () => {
 		<div className="experience-container">
 			<div className="experience-header">
 				<h2 className="retro-title">
-					{"<"} {lang === "es" ? "Experiencia Laboral" : "Work Experience"} {"/">"}
+					{"<"} {lang === "es" ? "Experiencia Laboral" : "Work Experience"} {"/>"}
 				</h2>
 				<p className="experience-subtitle">
 					{lang === "es" ? "Mi trayectoria profesional" : "My professional journey"}
