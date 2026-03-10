@@ -73,14 +73,12 @@ const IconsComponent: React.FC<IconsComponentProps> = ({ style, className, showN
 		}
 	};
 
-	const handleLinkClick = (e: React.MouseEvent, url: string) => {
+	const handleLinkClick = (e: React.MouseEvent) => {
 		// Prevent link navigation in edit mode
 		if (isEditMode) {
 			e.preventDefault();
 			e.stopPropagation();
-			return;
 		}
-		// Allow normal navigation when not in edit mode
 	};
 
 	if (isLoading) {
@@ -131,7 +129,7 @@ const IconsComponent: React.FC<IconsComponentProps> = ({ style, className, showN
 							className={`icon ${isEditMode ? 'no-click' : ''}`}
 							target="_blank" 
 							rel="noopener noreferrer"
-							onClick={(e) => handleLinkClick(e, link.url)}
+							onClick={(e) => handleLinkClick(e)}
 						>
 							<IconComponent size={20} />
 							{showName && <span className="icon-label">{label || ''}</span>}

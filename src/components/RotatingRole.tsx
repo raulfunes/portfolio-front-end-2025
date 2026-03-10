@@ -21,7 +21,6 @@ const RotatingRole: React.FC<RotatingRoleProps> = ({
   onFirstComplete,
 }) => {
   const [displayedText, setDisplayedText] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
   const [cursorBlink, setCursorBlink] = useState(false);
   const [started, setStarted] = useState(false);
   const onFirstCompleteRef = useRef(onFirstComplete);
@@ -56,7 +55,6 @@ const RotatingRole: React.FC<RotatingRoleProps> = ({
       const currentRole = currentRoles[roleIndex % currentRoles.length];
       let charIndex = 0;
 
-      setShowCursor(true);
       setCursorBlink(false);
 
       // Type in

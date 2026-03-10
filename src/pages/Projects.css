@@ -598,3 +598,86 @@
   font-size: 1rem;
   color: #a0a0b0;
 }
+
+/* ===========================
+   IMAGE UPLOAD IN EDIT MODE
+   =========================== */
+.project-image-upload {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: block;
+}
+
+.project-image-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.25s;
+  filter: grayscale(30%) brightness(0.8);
+  display: block;
+}
+
+.project-image-upload:hover img {
+  filter: grayscale(60%) brightness(0.4);
+}
+
+.image-upload-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #22c55e;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.25s;
+  pointer-events: none;
+  letter-spacing: 0.04em;
+}
+
+.project-image-upload:hover .image-upload-overlay {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* Hide text/icon when not hovering */
+.image-upload-overlay svg,
+.image-upload-overlay span {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.project-image-upload:hover .image-upload-overlay svg,
+.project-image-upload:hover .image-upload-overlay span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.upload-spinner {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: spin 1s linear infinite;
+}
+
+.image-upload-error {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 77, 77, 0.9);
+  color: #fff;
+  font-family: 'VT323', monospace;
+  font-size: 0.85rem;
+  padding: 2px 10px;
+  white-space: nowrap;
+  border-radius: 2px;
+}
+
+.image-upload-input {
+  display: none;
+}

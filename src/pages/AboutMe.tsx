@@ -8,7 +8,7 @@ import TechBadges from "../components/TechBadges";
 import RotatingRole from "../components/RotatingRole";
 import { useHeroRoles, usePersonalInfo } from "../hooks/usePortfolioData";
 import { useEditMode } from "../contexts/EditModeContext";
-import { EditableText, EditableTextarea } from "../components/editable";
+import { EditableTextarea } from "../components/editable";
 import { Plus, Trash2, Pencil, Check, X, Loader2 } from "lucide-react";
 
 interface AboutMeProps {
@@ -24,7 +24,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ aboutWidth, aboutWidthStr, thresholdR
 	const [roleDone, setRoleDone] = useState(false);
 	
 	const { roles, isLoading: rolesLoading, updateRole, createRole, deleteRole } = useHeroRoles();
-	const { personalInfo, getInfo, updateInfo, isLoading: infoLoading } = usePersonalInfo();
+	const { getInfo, updateInfo } = usePersonalInfo();
 	const { isEditMode, editLanguage } = useEditMode();
 	
 	const [editingRoleId, setEditingRoleId] = useState<string | null>(null);
