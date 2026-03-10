@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useProjects } from "../hooks/usePortfolioData";
 import { useEditMode } from "../contexts/EditModeContext";
 import { EditableText, EditableTextarea } from "../components/editable";
-import { Plus, Trash2, Loader2, Check, X, Pencil } from "lucide-react";
+import { Plus, Trash2, Loader2, Check, X, Pencil, Camera } from "lucide-react";
 import "./Projects.css";
 
 const STATUS_OPTIONS = ['live', 'development', 'archived'] as const;
@@ -183,6 +183,85 @@ const EditableStatus = ({
 	);
 };
 
+// Clickable image with upload overlay in edit mode
+const ProjectImageUpload = ({
+	src,
+	alt,
+	onUploaded,
+}: {
+	src: string;
+	alt: string;
+	onUploaded: (url: string) => Promise<void>;
+}) => {
+	const { isDemoMode } = useEditMode();
+	const [uploading, setUploading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		// Demo mode: just show a local preview without uploading
+		if (isDemoMode) {
+			const localUrl = URL.createObjectURL(file);
+			await onUploaded(localUrl);
+			return;
+		}
+
+		const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+		if (!allowed.includes(file.type)) {
+			setError('Solo JPG, PNG, WEBP o GIF');
+			return;
+		}
+		if (file.size > 5 * 1024 * 1024) {
+			setError('Max 5 MB');
+			return;
+		}
+
+		setUploading(true);
+		setError(null);
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+			const res = await fetch('/api/upload-image', { method: 'POST', body: formData });
+			if (!res.ok) throw new Error('Upload failed');
+			const { url } = await res.json();
+			await onUploaded(url);
+		} catch {
+			setError('Error al subir');
+		} finally {
+			setUploading(false);
+			// reset so same file can be re-selected
+			if (inputRef.current) inputRef.current.value = '';
+		}
+	};
+
+	return (
+		<div className="project-image-upload" onClick={() => !uploading && inputRef.current?.click()}>
+			<img src={src || ''} alt={alt} crossOrigin="anonymous" />
+			<div className="image-upload-overlay">
+				{uploading ? (
+					<Loader2 size={28} className="spin upload-spinner" />
+				) : (
+					<>
+						<Camera size={28} />
+						<span>Cambiar imagen</span>
+					</>
+				)}
+			</div>
+			{error && <div className="image-upload-error">{error}</div>}
+			<input
+				ref={inputRef}
+				type="file"
+				accept="image/jpeg,image/png,image/webp,image/gif"
+				className="image-upload-input"
+				onChange={handleFileChange}
+			/>
+		</div>
+	);
+};
+
 export const Projects = () => {
 	const { i18n } = useTranslation();
 	const lang = i18n.language as 'es' | 'en';
@@ -271,11 +350,19 @@ export const Projects = () => {
 						)}
 
 						<div className="project-image-container">
-							<img
-								src={project.image || ''}
-								alt={lang === 'es' ? project.title_es : project.title_en}
-								crossOrigin="anonymous"
-							/>
+							{isEditMode ? (
+								<ProjectImageUpload
+									src={project.image || ''}
+									alt={lang === 'es' ? project.title_es : project.title_en}
+									onUploaded={async (url) => updateProject(project.id, { image: url })}
+								/>
+							) : (
+								<img
+									src={project.image || ''}
+									alt={lang === 'es' ? project.title_es : project.title_en}
+									crossOrigin="anonymous"
+								/>
+							)}
 							<div className="project-overlay">
 								{isEditMode ? (
 									<EditableStatus
