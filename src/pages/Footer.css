@@ -192,3 +192,170 @@
     justify-content: center;
   }
 }
+
+/* ===========================
+   EDIT MODE
+   =========================== */
+.footer-links.edit-mode {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Wrapper puts the action buttons on top of each link */
+.footer-link-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.footer-link-overlay {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  display: flex;
+  gap: 3px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 5;
+}
+
+.footer-link-wrapper:hover .footer-link-overlay {
+  opacity: 1;
+}
+
+.footer-link-overlay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+  padding: 0;
+}
+
+.footer-link-overlay-btn.edit {
+  background: rgba(34, 197, 94, 0.9);
+  color: #000;
+}
+
+.footer-link-overlay-btn.edit:hover {
+  background: #22c55e;
+}
+
+.footer-link-overlay-btn.delete {
+  background: rgba(255, 77, 77, 0.85);
+  color: #fff;
+}
+
+.footer-link-overlay-btn.delete:hover {
+  background: #ff4d4d;
+}
+
+.footer-link-overlay-btn.delete.confirming {
+  background: #ff4d4d;
+  animation: pulse-red 0.6s ease infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,77,77,0.6); }
+  50%       { box-shadow: 0 0 0 5px rgba(255,77,77,0); }
+}
+
+/* Inline edit form */
+.footer-link-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: #0d0d15;
+  border: 1px solid #22c55e;
+  min-width: 180px;
+  box-shadow: 3px 3px 0 rgba(34,197,94,0.15);
+}
+
+.footer-link-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-link-input {
+  background: #1a1a2e;
+  border: 1px solid #333;
+  color: #fff;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  padding: 4px 8px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.footer-link-input:focus {
+  border-color: #22c55e;
+}
+
+.footer-link-input.label { width: 120px; }
+.footer-link-input.url   { width: 100%; flex: 1; font-size: 0.85rem; }
+
+.footer-link-edit-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.footer-link-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  padding: 3px 10px;
+  transition: all 0.15s;
+}
+
+.footer-link-action.save {
+  color: #22c55e;
+  border-color: #22c55e;
+}
+
+.footer-link-action.save:hover {
+  background: rgba(34,197,94,0.15);
+}
+
+.footer-link-action.cancel {
+  color: #888;
+  border-color: #444;
+}
+
+.footer-link-action.cancel:hover {
+  color: #ff4d4d;
+  border-color: #ff4d4d;
+}
+
+/* Add button */
+.footer-link-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 2px dashed #22c55e;
+  color: #22c55e;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.footer-link-add:hover {
+  background: rgba(34,197,94,0.1);
+  border-style: solid;
+}
+
