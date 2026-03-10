@@ -2,8 +2,16 @@
 -- Portfolio Edit Mode: Database Setup
 -- =============================================
 
+-- Drop existing tables if they exist (for clean setup)
+DROP TABLE IF EXISTS technologies CASCADE;
+DROP TABLE IF EXISTS tech_categories CASCADE;
+DROP TABLE IF EXISTS contact_links CASCADE;
+DROP TABLE IF EXISTS personal_info CASCADE;
+DROP TABLE IF EXISTS experiences CASCADE;
+DROP TABLE IF EXISTS projects CASCADE;
+
 -- Tabla de proyectos con soporte i18n
-CREATE TABLE IF NOT EXISTS projects (
+CREATE TABLE projects (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title_es TEXT NOT NULL,
   title_en TEXT NOT NULL,
@@ -21,7 +29,7 @@ CREATE TABLE IF NOT EXISTS projects (
 );
 
 -- Tabla de experiencias laborales
-CREATE TABLE IF NOT EXISTS experiences (
+CREATE TABLE experiences (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title_es TEXT NOT NULL,
   title_en TEXT NOT NULL,
@@ -44,7 +52,7 @@ CREATE TABLE IF NOT EXISTS experiences (
 );
 
 -- Tabla de categorias de tecnologias
-CREATE TABLE IF NOT EXISTS tech_categories (
+CREATE TABLE tech_categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug TEXT UNIQUE NOT NULL,
   title_es TEXT NOT NULL,
@@ -54,7 +62,7 @@ CREATE TABLE IF NOT EXISTS tech_categories (
 );
 
 -- Tabla de tecnologias individuales
-CREATE TABLE IF NOT EXISTS technologies (
+CREATE TABLE technologies (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   category_id UUID REFERENCES tech_categories(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
@@ -64,7 +72,7 @@ CREATE TABLE IF NOT EXISTS technologies (
 );
 
 -- Tabla de informacion personal (contenido i18n)
-CREATE TABLE IF NOT EXISTS personal_info (
+CREATE TABLE personal_info (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   key TEXT UNIQUE NOT NULL,
   value_es TEXT NOT NULL,
@@ -73,7 +81,7 @@ CREATE TABLE IF NOT EXISTS personal_info (
 );
 
 -- Tabla de links de contacto
-CREATE TABLE IF NOT EXISTS contact_links (
+CREATE TABLE contact_links (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   type TEXT NOT NULL CHECK (type IN ('email', 'linkedin', 'github', 'cv', 'other')),
   url TEXT NOT NULL,
@@ -95,21 +103,38 @@ ALTER TABLE technologies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE personal_info ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_links ENABLE ROW LEVEL SECURITY;
 
--- Politicas de lectura publica
-CREATE POLICY "Public read projects" ON projects FOR SELECT USING (true);
-CREATE POLICY "Public read experiences" ON experiences FOR SELECT USING (true);
-CREATE POLICY "Public read tech_categories" ON tech_categories FOR SELECT USING (true);
-CREATE POLICY "Public read technologies" ON technologies FOR SELECT USING (true);
-CREATE POLICY "Public read personal_info" ON personal_info FOR SELECT USING (true);
-CREATE POLICY "Public read contact_links" ON contact_links FOR SELECT USING (true);
+-- Politicas de lectura publica (SELECT)
+CREATE POLICY "projects_public_read" ON projects FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "experiences_public_read" ON experiences FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "tech_categories_public_read" ON tech_categories FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "technologies_public_read" ON technologies FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "personal_info_public_read" ON personal_info FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "contact_links_public_read" ON contact_links FOR SELECT TO anon, authenticated USING (true);
 
--- Politicas de escritura solo para usuarios autenticados
-CREATE POLICY "Auth write projects" ON projects FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth write experiences" ON experiences FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth write tech_categories" ON tech_categories FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth write technologies" ON technologies FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth write personal_info" ON personal_info FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth write contact_links" ON contact_links FOR ALL USING (auth.role() = 'authenticated');
+-- Politicas de escritura para usuarios autenticados (INSERT, UPDATE, DELETE)
+CREATE POLICY "projects_auth_insert" ON projects FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "projects_auth_update" ON projects FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "projects_auth_delete" ON projects FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "experiences_auth_insert" ON experiences FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "experiences_auth_update" ON experiences FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "experiences_auth_delete" ON experiences FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "tech_categories_auth_insert" ON tech_categories FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "tech_categories_auth_update" ON tech_categories FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "tech_categories_auth_delete" ON tech_categories FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "technologies_auth_insert" ON technologies FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "technologies_auth_update" ON technologies FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "technologies_auth_delete" ON technologies FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "personal_info_auth_insert" ON personal_info FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "personal_info_auth_update" ON personal_info FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "personal_info_auth_delete" ON personal_info FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "contact_links_auth_insert" ON contact_links FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "contact_links_auth_update" ON contact_links FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "contact_links_auth_delete" ON contact_links FOR DELETE TO authenticated USING (true);
 
 -- =============================================
 -- Seed Data: Proyectos
@@ -269,7 +294,7 @@ SELECT id, 'CI/CD', 70, '#22c55e', 5 FROM tech_categories WHERE slug = 'devops';
 
 INSERT INTO personal_info (key, value_es, value_en)
 VALUES 
-('title', 'Hola! Soy Raúl Funes', 'Hi! I am Raúl Funes'),
+('title', 'Hola! Soy Raul Funes', 'Hi! I am Raul Funes'),
 ('subtitle', 'Desarrollador FullStack', 'Software Engineer'),
 ('paragraph', 'Desarrollador apasionado por crear experiencias web modernas y eficientes. Me especializo en React, TypeScript y Node.js, con enfoque en codigo limpio, rendimiento y accesibilidad. Siempre aprendiendo nuevas tecnologias.', 'Passionate developer focused on creating modern and efficient web experiences. I specialize in React, TypeScript, and Node.js, with a strong emphasis on clean code, performance, and accessibility. Always learning new technologies.'),
 ('roles', 'Desarrollador Frontend,Desarrollador Backend,Desarrollador FullStack,Software Engineer', 'Frontend Developer,Backend Developer,FullStack Developer,Software Engineer');
