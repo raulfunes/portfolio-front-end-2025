@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useEditMode } from "../contexts/EditModeContext"
 import { useContactLinks } from "../hooks/usePortfolioData"
 import { Check, Pencil, Plus, Trash2, X } from "lucide-react"
+import { HeartButton } from "../components/HeartButton"
 import "./Footer.css"
 
 // Map icon names → short display strings
@@ -178,6 +179,7 @@ export const Footer = () => {
             {" "}{currentYear} Raul Funes - Hecho con React{" "}
             <span className="copyright-symbol">{"*/"}</span>
           </p>
+          <HeartButton />
           <p className="footer-status">
             <span className="status-dot"></span>
             Disponible para proyectos
