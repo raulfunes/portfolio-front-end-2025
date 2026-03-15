@@ -1,0 +1,51 @@
+.heart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 2px solid #2d2d44;
+  color: #888;
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.heart-btn:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.25);
+  transform: translateY(-2px);
+}
+
+.heart-btn--liked {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.2);
+}
+
+.heart-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.heart-btn--liked .heart-icon {
+  animation: heart-pop 0.3s ease;
+}
+
+@keyframes heart-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.5); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.heart-count {
+  font-size: 1.1rem;
+  min-width: 20px;
+  text-align: left;
+}
