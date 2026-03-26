@@ -3,6 +3,7 @@ import { useEditMode } from "../contexts/EditModeContext"
 import { useContactLinks } from "../hooks/usePortfolioData"
 import { Check, Pencil, Plus, Trash2, X } from "lucide-react"
 import { HeartButton } from "../components/HeartButton"
+import { track } from "@vercel/analytics"
 import "./Footer.css"
 
 // Map icon names → short display strings
@@ -159,6 +160,7 @@ export const Footer = () => {
                 className="footer-link"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track('footer_link_click', { label, type: link.type ?? link.icon ?? 'unknown' })}
               >
                 <span className="link-icon">{iconLabel}</span>
                 {label}
