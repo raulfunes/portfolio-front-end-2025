@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import { useAuth } from './AuthContext'
 
-type EditLanguage = 'es' | 'en'
-
 interface PendingChange {
   table: string
   id: string
@@ -14,12 +12,10 @@ interface PendingChange {
 interface EditModeContextType {
   isEditMode: boolean
   isDemoMode: boolean
-  editLanguage: EditLanguage
   pendingChanges: PendingChange[]
   toggleEditMode: () => void
   enterDemoMode: () => void
   exitDemoMode: () => void
-  setEditLanguage: (lang: EditLanguage) => void
   addPendingChange: (change: Omit<PendingChange, 'oldValue'> & { oldValue?: unknown }) => void
   removePendingChange: (table: string, id: string, field: string) => void
   clearPendingChanges: () => void
