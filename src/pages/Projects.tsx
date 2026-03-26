@@ -4,6 +4,7 @@ import { useProjects } from "../hooks/usePortfolioData";
 import { useEditMode } from "../contexts/EditModeContext";
 import { EditableText, EditableTextarea } from "../components/editable";
 import { Plus, Trash2, Loader2, Check, X, Pencil, Camera } from "lucide-react";
+import { track } from "@vercel/analytics";
 import "./Projects.css";
 
 const STATUS_OPTIONS = ['live', 'development', 'archived'] as const;
@@ -442,12 +443,14 @@ export const Projects = () => {
 								) : (
 									<>
 										{project.link && (
-											<a href={project.link} target="_blank" rel="noopener noreferrer" className="project-link demo">
+											<a href={project.link} target="_blank" rel="noopener noreferrer" className="project-link demo"
+												onClick={() => track('project_link_click', { project: lang === 'es' ? project.title_es : project.title_en, type: 'demo' })}>
 												<span className="link-icon">[~]</span> Demo
 											</a>
 										)}
 										{project.github && (
-											<a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link github">
+											<a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link github"
+												onClick={() => track('project_link_click', { project: lang === 'es' ? project.title_es : project.title_en, type: 'github' })}>
 												<span className="link-icon">[&lt;&gt;]</span> {lang === 'es' ? 'Codigo' : 'Code'}
 											</a>
 										)}

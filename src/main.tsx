@@ -6,8 +6,10 @@ import i18n from './i18n/index.ts'
 import { AuthProvider } from './contexts/AuthContext.tsx'
 import { EditModeProvider } from './contexts/EditModeContext.tsx'
 import { inject } from '@vercel/analytics'
+import { injectSpeedInsights } from '@vercel/speed-insights'
 
 inject()
+injectSpeedInsights()
 
 // Sync <html lang=""> with the active i18n language for SEO
 document.documentElement.lang = i18n.language?.split('-')[0] ?? 'es'
