@@ -8,5 +8,9 @@
   "about": {
     "title": "About us",
     "text": "We are developers"
+  },
+  "footer": {
+    "thanks": "Gracias por visitar",
+    "available": "Disponible para proyectos"
   }
 }

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useEditMode } from "../contexts/EditModeContext"
 import { useContactLinks } from "../hooks/usePortfolioData"
 import { Check, Pencil, Plus, Trash2, X } from "lucide-react"
@@ -21,12 +22,14 @@ type EditingLink = {
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const { t, i18n } = useTranslation()
   const { isEditMode, editLanguage } = useEditMode()
   const { links, updateLink, createLink, deleteLink } = useContactLinks()
   const [editing, setEditing] = useState<EditingLink | null>(null)
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
 
-  const lang = editLanguage
+  // Use active UI language for display; editLanguage only drives which field is saved
+  const lang = i18n.language as "es" | "en"
 
   const startEdit = (id: string, url: string, label: string) => {
     setEditing({ id, url, label })
@@ -66,14 +69,14 @@ export const Footer = () => {
   return (
     <footer className="footer-section">
       <div className="footer-content">
-        <div className="footer-terminal">
+          <div className="footer-terminal">
           <div className="footer-command">
             <span className="footer-prompt">$</span>
-            <span className="footer-text">echo "Gracias por visitar"</span>
+            <span className="footer-text">echo "{t('footer.thanks')}"</span>
           </div>
           <div className="footer-output">
             <span className="output-arrow">&gt;</span>
-            <span>Gracias por visitar</span>
+            <span>{t('footer.thanks')}</span>
           </div>
         </div>
 
@@ -180,7 +183,7 @@ export const Footer = () => {
           </p>
           <p className="footer-status">
             <span className="status-dot"></span>
-            Disponible para proyectos
+            {t('footer.available')}
           </p>
         </div>
       </div>
