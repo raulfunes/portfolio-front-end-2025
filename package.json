@@ -18,9 +18,12 @@
     "swr": "^2.3.3"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
     "typescript": "~5.7.2"
   }
 }
