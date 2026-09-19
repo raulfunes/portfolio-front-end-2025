@@ -1,43 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useExperiences } from "@/hooks/use-portfolio-data";
+import type { Locale } from "@/lib/types";
 
-const experiences = [
-  {
-    title: "Frontend Developer",
-    company: "TechCorp",
-    period: "2022 - Presente",
-    duration: "2+ anos",
-    type: "Tiempo completo",
-    location: "Remoto",
-    description:
-      "Desarrollo de interfaces modernas con React, implementacion de diseno responsive y mantenimiento de componentes UI reutilizables para aplicaciones de alto trafico.",
-    achievements: [
-      "Reduci el tiempo de carga en un 40% optimizando componentes",
-      "Implemente sistema de design tokens usado por 5 equipos",
-      "Lidere migracion de JavaScript a TypeScript",
-    ],
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Next.js", "Redux"],
-  },
-  {
-    title: "Desarrollador Web Jr.",
-    company: "WebStudio",
-    period: "2020 - 2022",
-    duration: "2 anos",
-    type: "Tiempo completo",
-    location: "Hibrido",
-    description:
-      "Maquetacion HTML/CSS, desarrollo JavaScript y creacion de sitios con WordPress para clientes de diversos sectores.",
-    achievements: [
-      "Desarrolle +15 sitios web para clientes",
-      "Automatice procesos de deploy reduciendo errores un 60%",
-      "Cree plantillas reutilizables para acelerar entregas",
-    ],
-    technologies: ["HTML", "CSS", "JavaScript", "WordPress", "PHP"],
-  },
-];
+interface ExperienceProps {
+  locale?: Locale;
+}
 
-export function Experience() {
+export function Experience({ locale = "es" }: ExperienceProps) {
+  const { experiences } = useExperiences();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -69,8 +41,12 @@ export function Experience() {
   return (
     <div className="experience-container">
       <div className="experience-header">
-        <h2 className="retro-title">{"<"} Experiencia Laboral {"/>"}</h2>
-        <p className="experience-subtitle">Mi trayectoria profesional</p>
+        <h2 className="retro-title">
+          {"<"} {locale === "en" ? "Work Experience" : "Experiencia Laboral"} {"/>"}
+        </h2>
+        <p className="experience-subtitle">
+          {locale === "en" ? "My professional journey" : "Mi trayectoria profesional"}
+        </p>
       </div>
 
       <div className="experience-timeline">
@@ -87,7 +63,7 @@ export function Experience() {
             <div className="experience-card-header">
               <div className="experience-year-badge">
                 <span className="pixel-border">
-                  {exp.period.split(" - ")[0]}
+                  {(exp.period ?? "").split(" - ")[0]}
                 </span>
               </div>
               <div className="experience-connector">
@@ -113,7 +89,11 @@ export function Experience() {
                 </div>
               </div>
 
-              <p className="experience-description">{exp.description}</p>
+              <p className="experience-description">
+                {locale === "en"
+                  ? exp.description_en ?? exp.description_es
+                  : exp.description_es}
+              </p>
 
               <div
                 className={`experience-details ${expandedIndex === index ? "visible" : ""}`}
@@ -121,10 +101,15 @@ export function Experience() {
                 <div className="achievements-section">
                   <h5 className="section-title">
                     <span className="title-icon">*</span>
-                    Logros Destacados
+                    {locale === "en" ? "Key Achievements" : "Logros Destacados"}
                   </h5>
                   <ul className="achievements-list">
-                    {exp.achievements.map((achievement, i) => (
+                    {(locale === "en"
+                      ? exp.achievements_en?.length
+                        ? exp.achievements_en
+                        : exp.achievements_es
+                      : exp.achievements_es
+                    ).map((achievement, i) => (
                       <li key={i} className="achievement-item">
                         <span className="bullet">[+]</span>
                         {achievement}
@@ -146,7 +131,13 @@ export function Experience() {
 
               <div className="expand-indicator">
                 <span>
-                  {expandedIndex === index ? "[-] Colapsar" : "[+] Ver logros"}
+                  {expandedIndex === index
+                    ? locale === "en"
+                      ? "[-] Collapse"
+                      : "[-] Colapsar"
+                    : locale === "en"
+                      ? "[+] View achievements"
+                      : "[+] Ver logros"}
                 </span>
               </div>
             </div>

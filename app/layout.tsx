@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Press_Start_2P, VT323 } from "next/font/google";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { EditModeProvider } from "@/contexts/EditModeContext";
 import "./globals.css";
 
 const pressStart2P = Press_Start_2P({
@@ -39,7 +40,9 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={`${pressStart2P.variable} ${vt323.variable}`}>
         <AuthProvider>
-          {children}
+          <EditModeProvider>
+            {children}
+          </EditModeProvider>
         </AuthProvider>
       </body>
     </html>

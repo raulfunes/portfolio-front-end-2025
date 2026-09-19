@@ -7,6 +7,7 @@ import { TypewriterText } from "./TypewriterText";
 import { TerminalFrame } from "./TerminalFrame";
 import { TechBadges } from "./TechBadges";
 import { RotatingRole } from "./RotatingRole";
+import type { Profile } from "@/lib/types";
 
 interface AboutMeProps {
   aboutWidth: number;
@@ -17,6 +18,8 @@ interface AboutMeProps {
     roles: string[];
     paragraph: string;
   };
+  imageUrl?: string;
+  profile?: Profile | null;
 }
 
 export function AboutMe({
@@ -24,6 +27,8 @@ export function AboutMe({
   aboutWidthStr,
   thresholdReached,
   translations,
+  imageUrl = "/images/myself.jpg",
+  profile,
 }: AboutMeProps) {
   const [titleDone, setTitleDone] = useState(false);
   const [roleDone, setRoleDone] = useState(false);
@@ -49,11 +54,12 @@ export function AboutMe({
           <div className="photo-glow" />
           <div className="about-photo">
             <Image
-              src="/images/myself.jpg"
-              alt="Raul Funes"
+              src={imageUrl || "/images/myself.jpg"}
+              alt={translations.title || "Profile"}
               width={300}
               height={300}
               priority
+              unoptimized={imageUrl?.startsWith("http")}
             />
           </div>
         </div>

@@ -1,63 +1,24 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTechnologies } from "@/hooks/use-portfolio-data";
+import type { Locale } from "@/lib/types";
 
-type Technology = {
-  name: string;
-  level: number;
-  color: string;
-};
+interface TechnologiesSectionProps {
+  locale?: Locale;
+}
 
-type TechCategory = {
-  id: string;
-  title: string;
-  icon: string;
-  technologies: Technology[];
-};
-
-const techCategories: TechCategory[] = [
-  {
-    id: "frontend",
-    title: "Frontend",
-    icon: "[>_]",
-    technologies: [
-      { name: "React", level: 90, color: "#61DAFB" },
-      { name: "TypeScript", level: 85, color: "#3178C6" },
-      { name: "Next.js", level: 80, color: "#ffffff" },
-      { name: "Tailwind CSS", level: 85, color: "#06B6D4" },
-      { name: "Vue.js", level: 70, color: "#4FC08D" },
-    ],
-  },
-  {
-    id: "backend",
-    title: "Backend",
-    icon: "[~/]",
-    technologies: [
-      { name: "Node.js", level: 85, color: "#68A063" },
-      { name: "Python", level: 75, color: "#3776AB" },
-      { name: "Express", level: 80, color: "#ffffff" },
-      { name: "PostgreSQL", level: 75, color: "#4169E1" },
-      { name: "MongoDB", level: 70, color: "#47A248" },
-    ],
-  },
-  {
-    id: "devops",
-    title: "DevOps & Tools",
-    icon: "[#!]",
-    technologies: [
-      { name: "Git", level: 90, color: "#F05032" },
-      { name: "Docker", level: 75, color: "#2496ED" },
-      { name: "AWS", level: 65, color: "#FF9900" },
-      { name: "Linux", level: 70, color: "#FCC624" },
-      { name: "CI/CD", level: 70, color: "#22c55e" },
-    ],
-  },
-];
-
-export function TechnologiesSection() {
-  const [activeCategory, setActiveCategory] = useState<string>("frontend");
+export function TechnologiesSection({ locale = "es" }: TechnologiesSectionProps) {
+  const { categories: techCategories } = useTechnologies();
+  const [activeCategory, setActiveCategory] = useState<string>("");
   const [visibleBars, setVisibleBars] = useState<Set<string>>(new Set());
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!activeCategory && techCategories.length > 0) {
+      setActiveCategory(techCategories[0].id);
+    }
+  }, [techCategories, activeCategory]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -87,7 +48,9 @@ export function TechnologiesSection() {
   return (
     <section className="technologies-section" ref={sectionRef}>
       <div className="technologies-header">
-        <h2 className="technologies-title">{"<"} Tecnologias {"/>"}</h2>
+        <h2 className="technologies-title">
+          {"<"} {locale === "en" ? "Technologies" : "Tecnologias"} {"/>"}
+        </h2>
         <p className="technologies-subtitle">
           {"cat skills.json | jq '.technologies'"}
         </p>
@@ -104,7 +67,9 @@ export function TechnologiesSection() {
             }}
           >
             <span className="tab-icon">{category.icon}</span>
-            <span className="tab-title">{category.title}</span>
+            <span className="tab-title">
+              {locale === "en" ? category.name_en : category.name_es}
+            </span>
           </button>
         ))}
       </div>
@@ -124,7 +89,11 @@ export function TechnologiesSection() {
             <div className="terminal-output">
               <span className="output-prefix">$</span>
               <span className="output-text">
-                Mostrando habilidades de {currentCategory?.title}...
+                {locale === "en" ? "Showing skills for" : "Mostrando habilidades de"}{" "}
+                {locale === "en"
+                  ? currentCategory?.name_en
+                  : currentCategory?.name_es}
+                ...
               </span>
             </div>
 

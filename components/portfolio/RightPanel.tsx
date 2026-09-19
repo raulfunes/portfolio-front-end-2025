@@ -5,15 +5,17 @@ import { Experience } from "./Experience";
 import { Projects } from "./Projects";
 import { TechnologiesSection } from "./Technologies";
 import { Footer } from "./Footer";
+import type { Locale } from "@/lib/types";
 
 interface RightPanelProps {
   panelWidth: string;
   left: string;
   opacity: number;
   onScroll?: (scrollLeft: number) => void;
+  locale?: Locale;
 }
 
-export function RightPanel({ panelWidth, left, opacity, onScroll }: RightPanelProps) {
+export function RightPanel({ panelWidth, left, opacity, onScroll, locale = "es" }: RightPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -109,10 +111,10 @@ export function RightPanel({ panelWidth, left, opacity, onScroll }: RightPanelPr
         className="right-panel-container"
         style={{ width: "100%", left: "0", opacity: 1 }}
       >
-        <Experience />
-        <Projects />
-        <TechnologiesSection />
-        <Footer />
+        <Experience locale={locale} />
+        <Projects locale={locale} />
+        <TechnologiesSection locale={locale} />
+        <Footer locale={locale} />
       </div>
     );
   }
@@ -132,10 +134,10 @@ export function RightPanel({ panelWidth, left, opacity, onScroll }: RightPanelPr
       }}
     >
       <div style={{ display: "flex", minWidth: "max-content" }}>
-        <Experience />
-        <Projects />
-        <TechnologiesSection />
-        <Footer />
+        <Experience locale={locale} />
+        <Projects locale={locale} />
+        <TechnologiesSection locale={locale} />
+        <Footer locale={locale} />
       </div>
     </div>
   );

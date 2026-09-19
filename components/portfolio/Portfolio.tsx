@@ -3,17 +3,20 @@
 import { useState, useCallback, useEffect } from "react";
 import { useDarkMode } from "@/hooks/use-dark-mode";
 import { translations, type Locale } from "@/lib/translations";
+import { useProfile } from "@/hooks/use-portfolio-data";
 import { RetroParticles } from "./RetroParticles";
 import { Navbar } from "./Navbar";
 import { AboutMe } from "./AboutMe";
 import { RightPanel } from "./RightPanel";
 import { ScrollIndicator } from "./ScrollIndicator";
+import { FloatingEditButton } from "./FloatingEditButton";
 
 const ABOUT_MIN_WIDTH_PX = 120;
 const ABOUT_MAX_WIDTH_PERCENT = 50;
 
 export function Portfolio() {
   const { isDark, toggle, mounted } = useDarkMode();
+  const { profile } = useProfile();
   const [locale, setLocale] = useState<Locale>("es");
   const [aboutWidth, setAboutWidth] = useState(ABOUT_MAX_WIDTH_PERCENT);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -48,6 +51,14 @@ export function Portfolio() {
 
   const t = translations[locale];
 
+  const aboutTranslations = profile
+    ? {
+        title: profile.title || t.about.title,
+        roles: profile.roles?.length ? profile.roles : t.about.roles,
+        paragraph: profile.paragraph || t.about.paragraph,
+      }
+    : t.about;
+
   if (!mounted) {
     return (
       <div className="portfolio-container dark">
@@ -76,15 +87,19 @@ export function Portfolio() {
         aboutWidth={aboutWidth}
         aboutWidthStr={aboutWidthStr}
         thresholdReached={thresholdReached}
-        translations={t.about}
+        translations={aboutTranslations}
+        imageUrl={profile?.image_url ?? "/images/myself.jpg"}
+        profile={profile}
       />
       <RightPanel
         panelWidth={panelWidth}
         left={panelLeft}
         opacity={panelOpacity}
         onScroll={handleScroll}
+        locale={locale}
       />
       {!isMobile && thresholdReached && scrollLeft < 50 && <ScrollIndicator />}
+      <FloatingEditButton />
     </div>
   );
 }
