@@ -32,7 +32,7 @@ export function Experience({ locale = "es" }: ExperienceProps) {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [experiences]);
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);

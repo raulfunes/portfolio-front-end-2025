@@ -10,9 +10,6 @@ import { RotatingRole } from "./RotatingRole";
 import type { Profile } from "@/lib/types";
 
 interface AboutMeProps {
-  aboutWidth: number;
-  aboutWidthStr: string;
-  thresholdReached: boolean;
   translations: {
     title: string;
     roles: string[];
@@ -23,9 +20,6 @@ interface AboutMeProps {
 }
 
 export function AboutMe({
-  aboutWidth,
-  aboutWidthStr,
-  thresholdReached,
   translations,
   imageUrl = "/images/myself.jpg",
   profile,
@@ -36,21 +30,10 @@ export function AboutMe({
   const handleTitleComplete = useCallback(() => setTitleDone(true), []);
   const handleFirstRoleComplete = useCallback(() => setRoleDone(true), []);
 
-  const isCompact = !thresholdReached;
-
   return (
-    <div
-      style={{ width: aboutWidthStr }}
-      className={
-        thresholdReached ? "about-me-container" : "about-me-container threshold"
-      }
-    >
-      <div
-        className={
-          thresholdReached ? "about-content" : "about-content threshold"
-        }
-      >
-        <div style={{ width: aboutWidth * 2.5 }} className="photo-wrapper">
+    <div className="about-me-container">
+      <div className="about-content">
+        <div style={{ width: 260 }} className="photo-wrapper">
           <div className="photo-glow" />
           <div className="about-photo">
             <Image
@@ -64,9 +47,7 @@ export function AboutMe({
           </div>
         </div>
 
-        <TerminalFrame
-          className={isCompact ? "terminal-area terminal-compact" : "terminal-area"}
-        >
+        <TerminalFrame className="terminal-area">
           <TypewriterText
             text={translations.title}
             as="h1"
@@ -87,7 +68,6 @@ export function AboutMe({
           </p>
           <TechBadges
             className={roleDone ? "hero-fade-in visible" : "hero-fade-in"}
-            compact={isCompact}
           />
           <div
             className={
@@ -99,10 +79,7 @@ export function AboutMe({
             <span className="terminal-prompt">$</span>
             <span className="terminal-cmd">contact</span>
             <span className="terminal-flag">--via</span>
-            <IconsComponent
-              className="icons-container-terminal"
-              showName={thresholdReached}
-            />
+            <IconsComponent className="icons-container-terminal" showName />
           </div>
         </TerminalFrame>
       </div>

@@ -41,10 +41,9 @@ a {
    PORTFOLIO CONTAINER
    ============================================ */
 .portfolio-container {
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
   position: relative;
+  width: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
   background-color: #f2f2f2;
   color: #121212;
@@ -55,96 +54,20 @@ a {
   color: #f2f2f2;
 }
 
-@media (max-width: 768px) {
-  .portfolio-container {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: auto;
-    min-height: 100vh;
-  }
-}
-
 /* ============================================
-   SCROLL INDICATOR
-   ============================================ */
-.scroll-indicator {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: #121212;
-  font-family: var(--font-vt323), 'VT323', monospace;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  opacity: 0.7;
-  animation: fadeIn 1.2s ease-in;
-  z-index: 3;
-  transition: opacity 0.4s ease;
-}
-
-.portfolio-container.dark .scroll-indicator {
-  color: #f2f2f2;
-}
-
-.scroll-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.scroll-label span {
-  white-space: nowrap;
-}
-
-.scroll-line {
-  width: 40px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.3;
-}
-
-.scroll-icon {
-  animation: bounce 1.5s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 0.7; }
-}
-
-@media (max-width: 768px) {
-  .scroll-indicator {
-    display: none;
-  }
-}
-
-/* ============================================
-   ABOUT ME SECTION
+   ABOUT ME SECTION (hero, normal vertical flow)
    ============================================ */
 .about-me-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
   background-color: transparent;
   box-sizing: border-box;
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  padding: 50px;
-  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  padding: 80px 50px;
 }
 
 .about-content {
@@ -156,15 +79,6 @@ a {
   grid-template-areas: "photo terminal";
   column-gap: 3rem;
   align-items: center;
-}
-
-.about-content.threshold {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  max-width: 100%;
-  padding: 0 0.5rem;
 }
 
 .about-content h1, .about-content h2, .about-content p {
@@ -185,22 +99,6 @@ a {
   line-height: 1.5;
 }
 
-.about-content.threshold h1 {
-  font-size: 0.8rem;
-  margin-block: 0.25rem;
-}
-
-.about-content.threshold h2 {
-  font-size: 0.65rem;
-  margin-block: 0.15rem;
-}
-
-.about-content.threshold p {
-  font-size: 0.85rem;
-  margin-top: 0.4rem;
-  line-height: 1.4;
-}
-
 .terminal-area {
   grid-area: terminal;
 }
@@ -208,12 +106,6 @@ a {
 .photo-wrapper {
   position: relative;
   grid-area: photo;
-  transition: width 1s ease;
-}
-
-.about-content.threshold .photo-wrapper {
-  width: 100px !important;
-  flex-shrink: 0;
 }
 
 .photo-glow {
@@ -350,18 +242,8 @@ a {
 @media (max-width: 768px) {
   .about-me-container {
     position: relative;
-    width: 100% !important;
-    height: auto;
+    width: 100%;
     min-height: 100vh;
-    padding: 80px 20px 40px;
-    box-shadow: none;
-  }
-
-  .about-me-container.threshold {
-    position: relative;
-    width: 100% !important;
-    height: auto;
-    min-height: auto;
     padding: 80px 20px 40px;
   }
 
@@ -374,26 +256,14 @@ a {
     max-width: 100%;
   }
 
-  .about-content.threshold {
-    max-width: 100%;
-    padding: 0;
-  }
-
   .photo-wrapper {
     max-width: 150px !important;
     width: 150px !important;
   }
 
-  .about-content.threshold .photo-wrapper {
-    width: 120px !important;
-  }
-
   .about-content h1 { font-size: 1rem; text-align: center; }
   .about-content h2 { font-size: 0.75rem; text-align: center; }
   .about-content p { font-size: 1rem; text-align: center; }
-  .about-content.threshold h1 { font-size: 1rem; }
-  .about-content.threshold h2 { font-size: 0.75rem; }
-  .about-content.threshold p { font-size: 1rem; }
 
   .terminal-area { width: 100%; }
   .terminal-contact-line { justify-content: center; text-align: center; }
@@ -401,18 +271,16 @@ a {
 }
 
 /* ============================================
-   RIGHT PANEL
+   RIGHT PANEL (stacked sections, normal vertical flow)
    ============================================ */
 .right-panel-container {
-  position: fixed;
-  top: 0;
-  height: 100vh;
+  position: relative;
+  width: 100%;
   background-color: #0f0f1a;
   color: #e0e0e0;
   padding: 20px;
   box-sizing: border-box;
-  transition: opacity 0.3s ease, left 0.3s ease, width 0.3s ease;
-  z-index: 3;
+  z-index: 1;
 }
 
 .right-panel-container::before {
@@ -434,14 +302,7 @@ a {
 
 @media (max-width: 768px) {
   .right-panel-container {
-    position: relative;
-    width: 100% !important;
-    left: 0 !important;
-    height: auto;
-    opacity: 1 !important;
-    overflow-y: visible !important;
     padding: 20px 15px;
-    z-index: 1;
   }
 }
 

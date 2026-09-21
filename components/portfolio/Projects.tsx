@@ -33,7 +33,7 @@ export function Projects({ locale = "es" }: ProjectsProps) {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [projects]);
 
   const getStatusLabel = (status: string) => {
     switch (status) {
